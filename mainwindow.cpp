@@ -43,20 +43,20 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
 {
     switch (event->key()) {
     case Qt::Key_Left:
-        if (snake->getDirection() != Snake::direction::Right)
-            snake->setDirection(Snake::direction::Left);
+        if (snake->direction() != Snake::Direction::Right)
+            snake->setDirection(Snake::Direction::Left);
         break;
     case Qt::Key_Right:
-        if (snake->getDirection() != Snake::direction::Left)
-            snake->setDirection(Snake::direction::Right);
+        if (snake->direction() != Snake::Direction::Left)
+            snake->setDirection(Snake::Direction::Right);
         break;
     case Qt::Key_Up:
-        if (snake->getDirection() != Snake::direction::Down)
-            snake->setDirection(Snake::direction::Up);
+        if (snake->direction() != Snake::Direction::Down)
+            snake->setDirection(Snake::Direction::Up);
         break;
     case Qt::Key_Down:
-        if (snake->getDirection() != Snake::direction::Up)
-            snake->setDirection(Snake::direction::Down);
+        if (snake->direction() != Snake::Direction::Up)
+            snake->setDirection(Snake::Direction::Down);
         break;
     default:
         break;

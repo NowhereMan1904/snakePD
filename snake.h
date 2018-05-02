@@ -10,7 +10,7 @@ class Snake : public QObject, public QGraphicsItem
     Q_OBJECT
 
 public:
-    enum class direction { Up, Down, Left, Right, Stop };
+    enum class Direction { Up, Down, Left, Right, Stop };
 
     Snake(QPoint position);
 
@@ -21,8 +21,8 @@ public:
 
     QPoint* position();
 
-    void setDirection(Snake::direction);
-    direction getDirection();
+    void setDirection(Snake::Direction);
+    Direction direction();
 
 public slots:
     void movement();
@@ -30,7 +30,7 @@ public slots:
 private:
     constexpr static int shift = 10;
     QPoint pos;
-    enum direction dir;
+    enum Direction dir;
     QTimer* timer;
 };
 

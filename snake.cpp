@@ -6,7 +6,7 @@
 
 Snake::Snake(QPoint position)
     : pos {position},
-      dir {direction::Stop},
+      dir {Direction::Stop},
       timer {new QTimer}
 {
 
@@ -36,12 +36,12 @@ QPoint* Snake::position()
     return &pos;
 }
 
-void Snake::setDirection(Snake::direction direction)
+void Snake::setDirection(Snake::Direction direction)
 {
     dir = direction;
 }
 
-Snake::direction Snake::getDirection()
+Snake::Direction Snake::direction()
 {
     return dir;
 }
@@ -50,16 +50,16 @@ void Snake::movement()
 {
     prepareGeometryChange();
     switch (dir) {
-    case direction::Up:
+    case Direction::Up:
         pos.ry() -= shift;
         break;
-    case direction::Down:
+    case Direction::Down:
         pos.ry() += shift;
         break;
-    case direction::Left:
+    case Direction::Left:
         pos.rx() -= shift;
         break;
-    case direction::Right:
+    case Direction::Right:
         pos.rx() += shift;
         break;
     default:
