@@ -26,8 +26,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-        snake.cpp
+        snake.cpp \
+        fruit.cpp
 
 HEADERS += \
         mainwindow.h \
-        snake.h
+        snake.h \
+        fruit.h

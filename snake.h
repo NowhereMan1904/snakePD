@@ -1,11 +1,10 @@
 #ifndef SNAKE_H
 #define SNAKE_H
 
-#include <QGraphicsItem>
 #include <QTimer>
-#include <QObject>
+#include <QGraphicsObject>
 
-class Snake : public QObject, public QGraphicsItem
+class Snake : public QGraphicsObject
 {
     Q_OBJECT
 
@@ -31,7 +30,6 @@ private:
     constexpr static int shift = 10;
     QPoint pos;
     enum Direction dir;
-    QTimer* timer;
 };
 
 #endif // SNAKE_H

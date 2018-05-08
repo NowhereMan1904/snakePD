@@ -8,7 +8,8 @@
 MainWindow::MainWindow(QWidget *parent)
     : QWidget{parent},
       view {new QGraphicsView},
-      scene {new QGraphicsScene}
+      scene {new QGraphicsScene},
+      timer {new QTimer}
 {
     setWindowTitle("SnakePorcoDio");
     setFixedSize(400,300);
@@ -32,6 +33,17 @@ MainWindow::MainWindow(QWidget *parent)
 
     snake = new Snake{QPoint{width()/2, height()/2}};
     scene->addItem(snake);
+
+    fruit = new Fruit{};
+    scene->addItem(fruit);
+
+    connect(timer, &QTimer::timeout,
+            snake, &Snake::movement);
+    connect(timer, &QTimer::timeout,
+            this,  &MainWindow::checkPosition);
+
+    timer->start(100);
+
 }
 
 MainWindow::~MainWindow()
@@ -60,5 +72,14 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         break;
     default:
         break;
+    }
+}
+
+void MainWindow::checkPosition()
+{
+    if (*(snake->position()) == fruit->getPos()) {
+        delete fruit;
+        fruit = new Fruit{};
+        scene->addItem(fruit);
     }
 }

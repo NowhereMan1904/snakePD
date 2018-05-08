@@ -6,13 +6,9 @@
 
 Snake::Snake(QPoint position)
     : pos {position},
-      dir {Direction::Stop},
-      timer {new QTimer}
+      dir {Direction::Stop}
 {
 
-    connect(timer, &QTimer::timeout,
-            this, &Snake::movement);
-    timer->start(100);
 }
 
 QRectF Snake::boundingRect() const
@@ -65,6 +61,6 @@ void Snake::movement()
     default:
         break;
     }
-    pos.rx() = pos.rx()<=0 ? 400 : pos.rx()%400;
-    pos.ry() = pos.ry()<=0 ? 300 : pos.ry()%300;
+    pos.rx() = pos.rx()<=0 ? 400-10 : pos.rx()%400;
+    pos.ry() = pos.ry()<=0 ? 300-10 : pos.ry()%300;
 }

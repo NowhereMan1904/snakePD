@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "snake.h"
+#include "fruit.h"
 
 #include <QWidget>
 #include <QGraphicsView>
@@ -17,12 +18,18 @@ public:
 
     void keyPressEvent(QKeyEvent *event);
 
+public slots:
+    void checkPosition();
+
 private:
     constexpr static int shift = 10;
     QGraphicsView* view;
     QGraphicsScene* scene;
 
     Snake* snake;
+    Fruit* fruit;
+
+    QTimer* timer;
 };
 
 #endif // MAINWINDOW_H
