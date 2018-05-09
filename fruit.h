@@ -10,6 +10,7 @@ class Fruit : public QGraphicsObject
 
 public:
     Fruit();
+    ~Fruit() override = default;
 
     QRectF boundingRect() const override;
     void paint(QPainter*,

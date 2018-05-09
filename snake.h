@@ -12,6 +12,7 @@ public:
     enum class Direction { Up, Down, Left, Right, Stop };
 
     Snake(QPoint position);
+    ~Snake() override = default;
 
     QRectF boundingRect() const override;
     void paint(QPainter*,
