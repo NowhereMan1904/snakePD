@@ -30,7 +30,8 @@ QPoint Fruit::position() const
     return pos;
 }
 
-QPoint&Fruit::position()
+QPoint& Fruit::position()
 {
+    prepareGeometryChange();
     return pos;
 }
