@@ -10,12 +10,14 @@ class Fruit : public QGraphicsObject
 
 public:
     Fruit();
-    QPoint getPos();
 
     QRectF boundingRect() const override;
     void paint(QPainter*,
                const QStyleOptionGraphicsItem*,
                QWidget*) override;
+
+    QPoint position() const;
+    QPoint& position();
 
 private:
     QPoint pos; // position of the fruit

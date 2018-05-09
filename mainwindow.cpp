@@ -77,7 +77,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
 
 void MainWindow::checkPosition()
 {
-    if (snake->position() == fruit->getPos()) {
+    if (snake->position() == fruit->position()) {
         delete fruit;
         fruit = new Fruit{};
         scene->addItem(fruit);

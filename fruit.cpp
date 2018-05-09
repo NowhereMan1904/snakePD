@@ -10,11 +10,6 @@ Fruit::Fruit()
     pos = QPoint{x*10, y*10};
 }
 
-QPoint Fruit::getPos()
-{
-    return pos;
-}
-
 QRectF Fruit::boundingRect() const
 {
     qreal penWidth = 10;
@@ -28,4 +23,14 @@ void Fruit::paint(QPainter* painter,
 {
     painter->setPen(QPen{Qt::white, 10});
     painter->drawPoint(pos);
+}
+
+QPoint Fruit::position() const
+{
+    return pos;
+}
+
+QPoint&Fruit::position()
+{
+    return pos;
 }

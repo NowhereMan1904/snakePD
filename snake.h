@@ -18,7 +18,8 @@ public:
                const QStyleOptionGraphicsItem*,
                QWidget*) override;
 
-    QPoint* position();
+    QPoint position() const;
+    QPoint& position();
 
     void setDirection(Snake::Direction);
     Direction direction();
