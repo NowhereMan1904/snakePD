@@ -5,8 +5,8 @@
 
 Fruit::Fruit()
 {
-    int x = QRandomGenerator::global()->bounded(39);
-    int y = QRandomGenerator::global()->bounded(29);
+    int x = QRandomGenerator::global()->bounded(1,40);
+    int y = QRandomGenerator::global()->bounded(1,30);
     pos = QPoint{x*10, y*10};
 }
 
