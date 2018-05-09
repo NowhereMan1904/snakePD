@@ -26,10 +26,15 @@ void Snake::paint(QPainter* painter,
     painter->drawPoint(pos);
 }
 
-QPoint* Snake::position()
+QPoint Snake::position() const
+{
+    return pos;
+}
+
+QPoint& Snake::position()
 {
     prepareGeometryChange();
-    return &pos;
+    return pos;
 }
 
 void Snake::setDirection(Snake::Direction direction)
