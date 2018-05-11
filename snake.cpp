@@ -5,37 +5,11 @@
 #include <QPainter>
 
 Snake::Snake(QPoint position)
-    : pos {position},
-      dir {Direction::Stop}
+    : dir {Direction::Left},
+      enable {true}
 {
     auto chunk = new ChunkSnake{position};
     chunks << chunk;
-}
-
-QRectF Snake::boundingRect() const
-{
-    qreal penWidth = 10;
-    return QRectF{pos.x() - penWidth/2, pos.y() - penWidth/2,
-                  pos.x() + penWidth, pos.y() + penWidth};
-}
-
-void Snake::paint(QPainter* painter,
-                  const QStyleOptionGraphicsItem*,
-                  QWidget*)
-{
-    painter->setPen(QPen{Qt::white, 10});
-    painter->drawPoint(pos);
-}
-
-QPoint Snake::position() const
-{
-    return pos;
-}
-
-QPoint& Snake::position()
-{
-    prepareGeometryChange();
-    return pos;
 }
 
 void Snake::setDirection(Snake::Direction direction)
@@ -48,14 +22,31 @@ Snake::Direction Snake::direction()
     return dir;
 }
 
+ChunkSnake* Snake::getHead()
+{
+    return chunks.front();
+}
+
+bool Snake::canChangeDirection()
+{
+    if (enable) {
+        enable = false;
+        return !enable;
+    }
+    return enable;
+}
+
 ChunkSnake* Snake::addChunk()
 {
+    auto chunk = new ChunkSnake{chunks.back()->position()};
+    chunks.push_back(chunk);
 
+    return chunk;
 }
 
 ChunkSnake* Snake::moveChunk()
 {
-    auto p = chunks.takeLast();
+    auto p = chunks.back();
 
     switch (dir) {
     case Direction::Up:
@@ -87,6 +78,7 @@ ChunkSnake* Snake::moveChunk()
                 300-10 :
                 p->position().ry()%300;
 
+    chunks.removeLast();
     chunks.push_front(p);
 
     return p;
@@ -94,23 +86,6 @@ ChunkSnake* Snake::moveChunk()
 
 void Snake::movement()
 {
-    prepareGeometryChange();
-    switch (dir) {
-    case Direction::Up:
-        pos.ry() -= shift;
-        break;
-    case Direction::Down:
-        pos.ry() += shift;
-        break;
-    case Direction::Left:
-        pos.rx() -= shift;
-        break;
-    case Direction::Right:
-        pos.rx() += shift;
-        break;
-    default:
-        break;
-    }
-    pos.rx() = pos.rx()<=0 ? 400-10 : pos.rx()%400;
-    pos.ry() = pos.ry()<=0 ? 300-10 : pos.ry()%300;
+    enable = true;
+    moveChunk();
 }

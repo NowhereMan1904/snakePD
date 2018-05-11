@@ -8,7 +8,7 @@
 
 #include "chunksnake.h"
 
-class Snake : public QGraphicsObject
+class Snake : public QObject
 {
     Q_OBJECT
 
@@ -18,27 +18,23 @@ public:
     Snake(QPoint position);
     ~Snake() override = default;
 
-    QRectF boundingRect() const override;
-    void paint(QPainter*,
-               const QStyleOptionGraphicsItem*,
-               QWidget*) override;
-
-    QPoint position() const;
-    QPoint& position();
-
     void setDirection(Snake::Direction);
     Direction direction();
 
+    ChunkSnake* getHead();
+
+    bool canChangeDirection();
+
+public slots:
     ChunkSnake* addChunk();
     ChunkSnake* moveChunk();
 
-public slots:
     void movement();
 
 private:
     constexpr static int shift = 10;
-    QPoint pos;
     enum Direction dir;
+    bool enable;
 
     ChunkSnake* head;
     ChunkSnake* tail;

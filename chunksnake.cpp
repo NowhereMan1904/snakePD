@@ -28,7 +28,7 @@ QPoint ChunkSnake::position() const
     return pos;
 }
 
-QPoint& ChunkSnake::setPosition()
+QPoint& ChunkSnake::position()
 {
     prepareGeometryChange();
     return pos;

@@ -15,7 +15,7 @@ public:
                QWidget*) override;
 
     QPoint position() const;
-    QPoint& setPosition();
+    QPoint& position();
 
 private:
     QPoint pos;

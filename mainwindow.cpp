@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent)
     setLayout(layout);
 
     snake = new Snake{QPoint{width()/2, height()/2}};
-    scene->addItem(snake);
+    scene->addItem(snake->getHead());
 
     fruit = new Fruit{};
     scene->addItem(fruit);
@@ -53,33 +53,35 @@ MainWindow::~MainWindow()
 
 void MainWindow::keyPressEvent(QKeyEvent* event)
 {
-    switch (event->key()) {
-    case Qt::Key_Left:
-        if (snake->direction() != Snake::Direction::Right)
-            snake->setDirection(Snake::Direction::Left);
-        break;
-    case Qt::Key_Right:
-        if (snake->direction() != Snake::Direction::Left)
-            snake->setDirection(Snake::Direction::Right);
-        break;
-    case Qt::Key_Up:
-        if (snake->direction() != Snake::Direction::Down)
-            snake->setDirection(Snake::Direction::Up);
-        break;
-    case Qt::Key_Down:
-        if (snake->direction() != Snake::Direction::Up)
-            snake->setDirection(Snake::Direction::Down);
-        break;
-    default:
-        break;
+    if (snake->canChangeDirection()) {
+        switch (event->key()) {
+        case Qt::Key_Left:
+            if (snake->direction() != Snake::Direction::Right)
+                snake->setDirection(Snake::Direction::Left);
+            break;
+        case Qt::Key_Right:
+            if (snake->direction() != Snake::Direction::Left)
+                snake->setDirection(Snake::Direction::Right);
+            break;
+        case Qt::Key_Up:
+            if (snake->direction() != Snake::Direction::Down)
+                snake->setDirection(Snake::Direction::Up);
+            break;
+        case Qt::Key_Down:
+            if (snake->direction() != Snake::Direction::Up)
+                snake->setDirection(Snake::Direction::Down);
+            break;
+        default:
+            break;
+        }
     }
 }
 
 void MainWindow::checkPosition()
-{
+{/*
     if (snake->position() == fruit->position()) {
         delete fruit;
         fruit = new Fruit{};
         scene->addItem(fruit);
     }
-}
+*/}
