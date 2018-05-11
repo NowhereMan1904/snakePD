@@ -8,7 +8,8 @@ Snake::Snake(QPoint position)
     : pos {position},
       dir {Direction::Stop}
 {
-
+    auto chunk = new ChunkSnake{position};
+    chunks << chunk;
 }
 
 QRectF Snake::boundingRect() const
@@ -45,6 +46,50 @@ void Snake::setDirection(Snake::Direction direction)
 Snake::Direction Snake::direction()
 {
     return dir;
+}
+
+ChunkSnake* Snake::addChunk()
+{
+
+}
+
+ChunkSnake* Snake::moveChunk()
+{
+    auto p = chunks.takeLast();
+
+    switch (dir) {
+    case Direction::Up:
+        p->position().ry() =
+                chunks.front()->position().ry() - shift;
+        break;
+    case Direction::Down:
+        p->position().ry() =
+                chunks.front()->position().ry() + shift;
+        break;
+    case Direction::Left:
+        p->position().rx() =
+                chunks.front()->position().rx() - shift;
+        break;
+    case Direction::Right:
+        p->position().rx() =
+                chunks.front()->position().rx() + shift;
+        break;
+    default:
+        break;
+    }
+
+    p->position().rx() =
+            p->position().rx()<=0 ?
+                400-10 :
+                p->position().rx()%400;
+    p->position().ry() =
+            p->position().ry()<=0 ?
+                300-10 :
+                p->position().ry()%300;
+
+    chunks.push_front(p);
+
+    return p;
 }
 
 void Snake::movement()

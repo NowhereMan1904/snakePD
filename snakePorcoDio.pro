@@ -27,9 +27,11 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
         snake.cpp \
-        fruit.cpp
+        fruit.cpp \
+    chunksnake.cpp
 
 HEADERS += \
         mainwindow.h \
         snake.h \
-        fruit.h
+        fruit.h \
+    chunksnake.h

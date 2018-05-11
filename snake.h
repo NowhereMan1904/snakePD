@@ -3,6 +3,10 @@
 
 #include <QTimer>
 #include <QGraphicsObject>
+#include <QList>
+#include <QHash>
+
+#include "chunksnake.h"
 
 class Snake : public QGraphicsObject
 {
@@ -25,6 +29,9 @@ public:
     void setDirection(Snake::Direction);
     Direction direction();
 
+    ChunkSnake* addChunk();
+    ChunkSnake* moveChunk();
+
 public slots:
     void movement();
 
@@ -32,6 +39,11 @@ private:
     constexpr static int shift = 10;
     QPoint pos;
     enum Direction dir;
+
+    ChunkSnake* head;
+    ChunkSnake* tail;
+    QList<ChunkSnake*> chunks;
+    QHash<QPoint, bool> checkboard;
 };
 
 #endif // SNAKE_H
