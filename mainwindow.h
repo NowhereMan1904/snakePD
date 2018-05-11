@@ -8,6 +8,8 @@
 #include <QGraphicsView>
 #include <QTimer>
 
+#include <map>
+
 class MainWindow : public QWidget
 {
     Q_OBJECT
@@ -18,10 +20,16 @@ public:
 
     void keyPressEvent(QKeyEvent *event);
 
+    void endGame();
+
 public slots:
     void checkPosition();
+    void movement();
 
 private:
+    void initializeHash();
+    QPoint checkFruit();
+
     constexpr static int shift = 10;
     QGraphicsView* view;
     QGraphicsScene* scene;
@@ -30,6 +38,8 @@ private:
     Fruit* fruit;
 
     QTimer* timer;
+
+    std::map<QPoint, bool> checkboard;
 };
 
 #endif // MAINWINDOW_H

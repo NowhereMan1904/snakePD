@@ -9,7 +9,7 @@ class Fruit : public QGraphicsObject
     Q_OBJECT
 
 public:
-    Fruit();
+    Fruit(QPoint);
     ~Fruit() override = default;
 
     QRectF boundingRect() const override;

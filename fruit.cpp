@@ -1,13 +1,10 @@
 #include "fruit.h"
 
-#include <QRandomGenerator>
 #include <QPainter>
 
-Fruit::Fruit()
+Fruit::Fruit(QPoint p)
+    : pos {p}
 {
-    int x = QRandomGenerator::global()->bounded(1,40);
-    int y = QRandomGenerator::global()->bounded(1,30);
-    pos = QPoint{x*10, y*10};
 }
 
 QRectF Fruit::boundingRect() const

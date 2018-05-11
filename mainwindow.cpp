@@ -4,6 +4,20 @@
 #include <QLayout>
 #include <QDebug>
 #include <QInputEvent>
+#include <QRandomGenerator>
+
+bool operator<(const QPoint&, const QPoint&);
+
+bool operator<(const QPoint& a, const QPoint& b) {
+    if (a.y() < b.y())
+        return true;
+    if (a.y() > b.y())
+        return false;
+    if (a.x() < b.x())
+        return true;
+    return false;
+
+}
 
 MainWindow::MainWindow(QWidget *parent)
     : QWidget{parent},
@@ -31,14 +45,18 @@ MainWindow::MainWindow(QWidget *parent)
 
     setLayout(layout);
 
-    snake = new Snake{QPoint{width()/2, height()/2}};
+    snake = new Snake{QPoint{(width()/2)+5, (height()/2)+5}};
     scene->addItem(snake->getHead());
 
-    fruit = new Fruit{};
+    initializeHash();
+
+    fruit = new Fruit{checkFruit()};
     scene->addItem(fruit);
 
+
+
     connect(timer, &QTimer::timeout,
-            snake, &Snake::movement);
+            this,  &MainWindow::movement);
     connect(timer, &QTimer::timeout,
             this,  &MainWindow::checkPosition);
 
@@ -78,10 +96,53 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
 }
 
 void MainWindow::checkPosition()
-{/*
-    if (snake->position() == fruit->position()) {
+{
+    if (snake->getHead()->position() == fruit->position()) {
         delete fruit;
-        fruit = new Fruit{};
+        fruit = new Fruit{checkFruit()};
         scene->addItem(fruit);
+        scene->addItem(snake->addChunk());
+        checkboard[snake->getTail()->position()] = false;
     }
-*/}
+}
+
+void MainWindow::movement()
+{
+    checkboard[snake->getTail()->position()] = true;
+    snake->moveChunk();
+    if (checkboard[snake->getHead()->position()] == false)
+        endGame();
+    else
+        checkboard[snake->getHead()->position()] = false;
+}
+
+void MainWindow::endGame()
+{
+    if (checkboard[snake->getHead()->position()] == false) {
+        timer->stop();
+        auto text = new QGraphicsSimpleTextItem{"HAI PERSO PORCODDIO"};
+        text->setPen(QPen{Qt::red});
+        scene->addItem(text);
+    }
+
+}
+
+void MainWindow::initializeHash()
+{
+    for (int i = 5; i<width(); i+=10) {
+        for (int j = 5; j<height(); j+=10) {
+            checkboard[QPoint{i,j}] = true;
+        }
+    }
+    checkboard[snake->getHead()->position()] = false;
+}
+
+QPoint MainWindow::checkFruit()
+{
+    int x,y;
+    do {
+        x = QRandomGenerator::global()->bounded(40);
+        y = QRandomGenerator::global()->bounded(30);
+    } while (checkboard[QPoint{x*10+5,y*10+5}] == false);
+    return QPoint{x*10+5,y*10+5};
+}

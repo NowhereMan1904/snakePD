@@ -22,6 +22,7 @@ public:
     Direction direction();
 
     ChunkSnake* getHead();
+    ChunkSnake* getTail();
 
     bool canChangeDirection();
 
@@ -29,17 +30,12 @@ public slots:
     ChunkSnake* addChunk();
     ChunkSnake* moveChunk();
 
-    void movement();
-
 private:
     constexpr static int shift = 10;
     enum Direction dir;
     bool enable;
 
-    ChunkSnake* head;
-    ChunkSnake* tail;
     QList<ChunkSnake*> chunks;
-    QHash<QPoint, bool> checkboard;
 };
 
 #endif // SNAKE_H
