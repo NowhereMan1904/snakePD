@@ -8,8 +8,7 @@ Snake::Snake(QPoint position)
     : dir {Direction::Left},
       enable {true}
 {
-    auto chunk = new ChunkSnake{position};
-    chunks << chunk;
+    chunks << new ChunkSnake{position};
 }
 
 void Snake::setDirection(Snake::Direction direction)
@@ -49,7 +48,7 @@ void Snake::changeColor(Fruit* fruit)
 ChunkSnake* Snake::addChunk()
 {
     auto chunk = new ChunkSnake{chunks.back()->position()};
-    chunks.push_back(chunk);
+    chunks << chunk;
 
     emit lenghtChanged(QString::number(chunks.size()));
     return chunk;
@@ -63,28 +62,24 @@ ChunkSnake* Snake::moveChunk()
 
     switch (dir) {
     case Direction::Up:
-        p->position().ry() =
-                chunks.front()->position().ry() - shift;
-        p->position().rx() =
-                chunks.front()->position().rx();
+        p->position() = QPoint{
+                        chunks.front()->position().rx(),
+                        chunks.front()->position().ry() - shift};
         break;
     case Direction::Down:
-        p->position().ry() =
-                chunks.front()->position().ry() + shift;
-        p->position().rx() =
-                chunks.front()->position().rx();
+        p->position() = QPoint{
+                        chunks.front()->position().rx(),
+                        chunks.front()->position().ry() + shift};
         break;
     case Direction::Left:
-        p->position().rx() =
-                chunks.front()->position().rx() - shift;
-        p->position().ry() =
-                chunks.front()->position().ry();
+        p->position() = QPoint{
+                        chunks.front()->position().rx() - shift,
+                        chunks.front()->position().ry()};
         break;
     case Direction::Right:
-        p->position().rx() =
-                chunks.front()->position().rx() + shift;
-        p->position().ry() =
-                chunks.front()->position().ry();
+        p->position() = QPoint{
+                        chunks.front()->position().rx() + shift,
+                        chunks.front()->position().ry()};
         break;
     default:
         break;

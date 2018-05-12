@@ -14,7 +14,7 @@ Fruit::Fruit(QPoint p)
 
 QRectF Fruit::boundingRect() const
 {
-    qreal penWidth = 10;
+    qreal penWidth = 12;
     return QRectF{pos.x() - penWidth/2, pos.y() - penWidth/2,
                   pos.x() + penWidth, pos.y() + penWidth};
 }

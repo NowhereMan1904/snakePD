@@ -132,22 +132,18 @@ void MainWindow::movement()
 
 void MainWindow::endGame()
 {
-    if (checkboard[snake->getHead()->position()] == false) {
-        timer->stop();
-        auto text = new QGraphicsSimpleTextItem{"HAI PERSO PORCODDIO"};
-        text->setPen(QPen{Qt::red});
-        scene->addItem(text);
-    }
-
+    timer->stop();
+    auto text = new QGraphicsSimpleTextItem{"HAI PERSO PORCODDIO"};
+    text->setPen(QPen{Qt::red});
+    scene->addItem(text);
 }
 
 void MainWindow::initializeHash()
 {
-    for (int i = 5; i<width(); i+=10) {
-        for (int j = 5; j<height(); j+=10) {
+    for (int i = 5; i<width(); i+=10)
+        for (int j = 5; j<height(); j+=10)
             checkboard[QPoint{i,j}] = true;
-        }
-    }
+
     checkboard[snake->getHead()->position()] = false;
 }
 
