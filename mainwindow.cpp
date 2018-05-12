@@ -74,7 +74,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(timer, &QTimer::timeout,
             this,  &MainWindow::checkPosition);
 
-    timer->start(50);
+    timer->start(20);
 }
 
 MainWindow::~MainWindow()

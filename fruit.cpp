@@ -6,9 +6,9 @@
 Fruit::Fruit(QPoint p)
     : pos {p}
 {
-    auto r = QRandomGenerator::global()->bounded(10,256);
-    auto g = QRandomGenerator::global()->bounded(10,256);
-    auto b = QRandomGenerator::global()->bounded(10,256);
+    auto r = QRandomGenerator::global()->bounded(100,256);
+    auto g = QRandomGenerator::global()->bounded(100,256);
+    auto b = QRandomGenerator::global()->bounded(100,256);
     color = QColor{r,g,b};
 }
 
@@ -23,8 +23,9 @@ void Fruit::paint(QPainter* painter,
                   const QStyleOptionGraphicsItem*,
                   QWidget*)
 {
-    painter->setPen(QPen{color, 10});
-    painter->drawPoint(pos);
+    painter->setPen(QPen{Qt::NoPen});
+    painter->setBrush(QBrush{color});
+    painter->drawEllipse(pos, 6, 6);
 }
 
 QPoint Fruit::position() const
