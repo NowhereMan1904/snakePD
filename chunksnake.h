@@ -17,10 +17,11 @@ public:
     QPoint position() const;
     QPoint& position();
 
-    static QColor color;
+    void setColor(QColor);
 
 private:
     QPoint pos;
+    QColor color;
 };
 
 #endif // CHUNKSNAKE_H

@@ -9,7 +9,8 @@
 
 bool operator<(const QPoint&, const QPoint&);
 
-bool operator<(const QPoint& a, const QPoint& b) {
+bool operator<(const QPoint& a, const QPoint& b)
+{
     if (a.y() < b.y())
         return true;
     if (a.y() > b.y())
@@ -17,17 +18,16 @@ bool operator<(const QPoint& a, const QPoint& b) {
     if (a.x() < b.x())
         return true;
     return false;
-
 }
 
 MainWindow::MainWindow(QWidget *parent)
     : QWidget{parent},
       view {new QGraphicsView},
       scene {new QGraphicsScene},
-      timer {new QTimer}
+      timer {new QTimer},
+      time {100}
 {
     setWindowTitle("SnakePorcoDio");
-//    setFixedSize(400,322);
     setFocus();
 
     scene->setBackgroundBrush(Qt::black);
@@ -51,6 +51,12 @@ MainWindow::MainWindow(QWidget *parent)
     labelLayout->addWidget(lengthLabel);
     labelWidget->setFixedHeight(22);
     labelWidget->setLayout(labelLayout);
+    auto speedLabel = new QLabel{QString::number(time)};
+    speedLabel->setStyleSheet("font-weight: bold");
+    auto speedText = new QLabel{"SPEED:"};
+    speedText->setStyleSheet("font-weight: bold");
+    labelLayout->addWidget(speedText);
+    labelLayout->addWidget(speedLabel);
 
     auto layout = new QVBoxLayout;
     layout->setContentsMargins(0,0,0,0);
@@ -59,7 +65,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     setLayout(layout);
 
-    snake = new Snake{QPoint{(width()/2)+5, (height()/2)+5}};
+    snake = new Snake{QPoint{(view->width()/2)+5,
+                             (view->height()/2)+5}};
     scene->addItem(snake->getHead());
 
     initializeHash();
@@ -69,12 +76,14 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(snake, &Snake::lenghtChanged,
             lengthLabel, &QLabel::setText);
+    connect(this, &MainWindow::speedChanged,
+            speedLabel, &QLabel::setText);
     connect(timer, &QTimer::timeout,
             this,  &MainWindow::movement);
     connect(timer, &QTimer::timeout,
-            this,  &MainWindow::checkPosition);
+            this,  &MainWindow::eatFruit);
 
-    timer->start(20);
+    timer->start(time);
 }
 
 MainWindow::~MainWindow()
@@ -108,7 +117,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     }
 }
 
-void MainWindow::checkPosition()
+void MainWindow::eatFruit()
 {
     if (snake->getHead()->position() == fruit->position()) {
         snake->changeColor(fruit);
@@ -117,6 +126,16 @@ void MainWindow::checkPosition()
         scene->addItem(fruit);
         scene->addItem(snake->addChunk());
         checkboard[snake->getTail()->position()] = false;
+
+        if (snake->getLength() == 40*30)
+            winGame();
+
+        if (snake->getLength() % 5 == 0 && time>=5) {
+            time -= time/10;
+            timer->start(time);
+
+            emit speedChanged(QString::number(time));
+        }
     }
 }
 
@@ -135,6 +154,14 @@ void MainWindow::endGame()
     timer->stop();
     auto text = new QGraphicsSimpleTextItem{"HAI PERSO PORCODDIO"};
     text->setPen(QPen{Qt::red});
+    scene->addItem(text);
+}
+
+void MainWindow::winGame()
+{
+    timer->stop();
+    auto text = new QGraphicsSimpleTextItem{"HAI VINTO PORCAMADONNA"};
+    text->setPen(QPen{Qt::green});
     scene->addItem(text);
 }
 

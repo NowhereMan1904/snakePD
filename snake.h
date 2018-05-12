@@ -29,6 +29,8 @@ public:
 
     void changeColor(Fruit*);
 
+    int getLength() const;
+
 public slots:
     ChunkSnake* addChunk();
     ChunkSnake* moveChunk();
@@ -40,6 +42,7 @@ private:
     constexpr static int shift = 10;
     enum Direction dir;
     bool enable;
+    QColor currentColor;
 
     QList<ChunkSnake*> chunks;
 };

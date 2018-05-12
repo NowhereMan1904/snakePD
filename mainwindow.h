@@ -21,10 +21,14 @@ public:
     void keyPressEvent(QKeyEvent *event);
 
     void endGame();
+    void winGame();
 
 public slots:
-    void checkPosition();
+    void eatFruit();
     void movement();
+
+signals:
+    void speedChanged(QString);
 
 private:
     void initializeHash();
@@ -38,6 +42,7 @@ private:
     Fruit* fruit;
 
     QTimer* timer;
+    int time;
 
     std::map<QPoint, bool> checkboard;
 };

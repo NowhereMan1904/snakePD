@@ -2,8 +2,6 @@
 
 #include <QPainter>
 
-QColor ChunkSnake::color = Qt::white;
-
 ChunkSnake::ChunkSnake(const QPoint& position)
     : pos{position}
 {
@@ -34,4 +32,9 @@ QPoint& ChunkSnake::position()
 {
     prepareGeometryChange();
     return pos;
+}
+
+void ChunkSnake::setColor(QColor c)
+{
+    color = c;
 }

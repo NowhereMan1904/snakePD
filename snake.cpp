@@ -5,8 +5,9 @@
 #include <QPainter>
 
 Snake::Snake(QPoint position)
-    : dir {Direction::Left},
-      enable {true}
+    : dir {Direction::Stop},
+      enable {true},
+      currentColor {Qt::white}
 {
     chunks << new ChunkSnake{position};
 }
@@ -42,7 +43,12 @@ bool Snake::canChangeDirection()
 
 void Snake::changeColor(Fruit* fruit)
 {
-    ChunkSnake::color = fruit->getColor();
+    currentColor = fruit->getColor();
+}
+
+int Snake::getLength() const
+{
+    return chunks.size();
 }
 
 ChunkSnake* Snake::addChunk()
@@ -93,6 +99,8 @@ ChunkSnake* Snake::moveChunk()
             p->position().ry()<5 ?
                 300-5 :
                 p->position().ry()%300;
+
+    p->setColor(currentColor);
 
     chunks.removeLast();
     chunks.push_front(p);
