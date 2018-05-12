@@ -7,6 +7,7 @@
 #include <QHash>
 
 #include "chunksnake.h"
+#include "fruit.h"
 
 class Snake : public QObject
 {
@@ -25,6 +26,8 @@ public:
     ChunkSnake* getTail();
 
     bool canChangeDirection();
+
+    void changeColor(Fruit*);
 
 public slots:
     ChunkSnake* addChunk();

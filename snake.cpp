@@ -41,6 +41,11 @@ bool Snake::canChangeDirection()
     return false;
 }
 
+void Snake::changeColor(Fruit* fruit)
+{
+    ChunkSnake::color = fruit->getColor();
+}
+
 ChunkSnake* Snake::addChunk()
 {
     auto chunk = new ChunkSnake{chunks.back()->position()};

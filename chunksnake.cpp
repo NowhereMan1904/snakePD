@@ -2,6 +2,8 @@
 
 #include <QPainter>
 
+QColor ChunkSnake::color = Qt::white;
+
 ChunkSnake::ChunkSnake(const QPoint& position)
     : pos{position}
 {
@@ -19,7 +21,7 @@ void ChunkSnake::paint(QPainter* painter,
                        const QStyleOptionGraphicsItem*,
                        QWidget*)
 {
-    painter->setPen(QPen{Qt::white, 10});
+    painter->setPen(QPen{color, 10});
     painter->drawPoint(pos);
 }
 

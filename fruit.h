@@ -20,8 +20,11 @@ public:
     QPoint position() const;
     QPoint& position();
 
+    QColor getColor() const;
+
 private:
     QPoint pos; // position of the fruit
+    QColor color;
 
 };
 

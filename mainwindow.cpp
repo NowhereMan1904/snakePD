@@ -60,7 +60,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(timer, &QTimer::timeout,
             this,  &MainWindow::checkPosition);
 
-    timer->start(100);
+    timer->start(50);
 
 }
 
@@ -98,6 +98,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
 void MainWindow::checkPosition()
 {
     if (snake->getHead()->position() == fruit->position()) {
+        snake->changeColor(fruit);
         delete fruit;
         fruit = new Fruit{checkFruit()};
         scene->addItem(fruit);

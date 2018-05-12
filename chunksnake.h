@@ -17,6 +17,8 @@ public:
     QPoint position() const;
     QPoint& position();
 
+    static QColor color;
+
 private:
     QPoint pos;
 };
