@@ -33,6 +33,9 @@ public slots:
     ChunkSnake* addChunk();
     ChunkSnake* moveChunk();
 
+signals:
+    void lenghtChanged(QString);
+
 private:
     constexpr static int shift = 10;
     enum Direction dir;

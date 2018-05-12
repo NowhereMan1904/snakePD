@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QInputEvent>
 #include <QRandomGenerator>
+#include <QLabel>
 
 bool operator<(const QPoint&, const QPoint&);
 
@@ -26,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
       timer {new QTimer}
 {
     setWindowTitle("SnakePorcoDio");
-    setFixedSize(400,300);
+//    setFixedSize(400,322);
     setFocus();
 
     scene->setBackgroundBrush(Qt::black);
@@ -37,12 +38,24 @@ MainWindow::MainWindow(QWidget *parent)
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setRenderHint(QPainter::Antialiasing);
-    view->setMinimumSize(400,300);
+    view->setFixedSize(400,300);
     view->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+
+    auto labelWidget = new QWidget;
+    auto labelLayout = new QHBoxLayout;
+    auto lengthLabel = new QLabel{"1"};
+    lengthLabel->setStyleSheet("font-weight: bold");
+    auto lengthText  = new QLabel{"SCORE:"};
+    lengthText->setStyleSheet("font-weight: bold");
+    labelLayout->addWidget(lengthText);
+    labelLayout->addWidget(lengthLabel);
+    labelWidget->setFixedHeight(22);
+    labelWidget->setLayout(labelLayout);
 
     auto layout = new QVBoxLayout;
     layout->setContentsMargins(0,0,0,0);
     layout->addWidget(view);
+    layout->addWidget(labelWidget);
 
     setLayout(layout);
 
@@ -54,15 +67,14 @@ MainWindow::MainWindow(QWidget *parent)
     fruit = new Fruit{checkFruit()};
     scene->addItem(fruit);
 
-
-
+    connect(snake, &Snake::lenghtChanged,
+            lengthLabel, &QLabel::setText);
     connect(timer, &QTimer::timeout,
             this,  &MainWindow::movement);
     connect(timer, &QTimer::timeout,
             this,  &MainWindow::checkPosition);
 
     timer->start(50);
-
 }
 
 MainWindow::~MainWindow()
