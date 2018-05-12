@@ -38,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setRenderHint(QPainter::Antialiasing);
     view->setMinimumSize(400,300);
+    view->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 
     auto layout = new QVBoxLayout;
     layout->setContentsMargins(0,0,0,0);
