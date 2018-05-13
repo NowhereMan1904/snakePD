@@ -8,8 +8,6 @@
 #include <QGraphicsView>
 #include <QTimer>
 
-#include <map>
-
 class MainWindow : public QWidget
 {
     Q_OBJECT
@@ -44,7 +42,7 @@ private:
     QTimer* timer;
     int time;
 
-    std::map<QPoint, bool> checkboard;
+    QHash<QPoint, bool> checkboard;
 };
 
 #endif // MAINWINDOW_H

@@ -7,18 +7,11 @@
 #include <QRandomGenerator>
 #include <QLabel>
 
-bool operator<(const QPoint&, const QPoint&);
-
-bool operator<(const QPoint& a, const QPoint& b)
+inline uint qHash(QPoint key, uint seed)
 {
-    if (a.y() < b.y())
-        return true;
-    if (a.y() > b.y())
-        return false;
-    if (a.x() < b.x())
-        return true;
-    return false;
+    return qHash(QPair<int,int>{key.x(), key.y()}, seed);
 }
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QWidget{parent},
