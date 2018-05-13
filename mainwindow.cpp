@@ -76,6 +76,12 @@ MainWindow::MainWindow(QWidget *parent)
     timer->start(time);
 }
 
+MainWindow::~MainWindow()
+{
+    delete snake;
+    delete timer;
+}
+
 void MainWindow::keyPressEvent(QKeyEvent* event)
 {
     if (snake->canChangeDirection()) {
