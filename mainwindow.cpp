@@ -51,7 +51,7 @@ MainWindow::MainWindow(QWidget *parent)
     labelLayout->addWidget(lengthLabel);
     labelWidget->setFixedHeight(22);
     labelWidget->setLayout(labelLayout);
-    auto speedLabel = new QLabel{QString::number(time)};
+    auto speedLabel = new QLabel{QString::number(1000/time)};
     speedLabel->setStyleSheet("font-weight: bold");
     auto speedText = new QLabel{"SPEED:"};
     speedText->setStyleSheet("font-weight: bold");
@@ -134,7 +134,7 @@ void MainWindow::eatFruit()
             time -= time/10;
             timer->start(time);
 
-            emit speedChanged(QString::number(time));
+            emit speedChanged(QString::number(1000/time));
         }
     }
 }
