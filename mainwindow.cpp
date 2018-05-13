@@ -60,7 +60,6 @@ MainWindow::MainWindow(QWidget *parent)
     scene->addItem(snake->getHead());
 
     initializeHash();
-#include <QList>
 
     fruit = new Fruit{checkFruit()};
     scene->addItem(fruit);
