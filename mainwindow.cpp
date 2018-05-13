@@ -64,7 +64,7 @@ MainWindow::MainWindow(QWidget *parent)
     fruit = new Fruit{checkFruit()};
     scene->addItem(fruit);
 
-    connect(snake, &Snake::lenghtChanged,
+    connect(snake, &Snake::lengthChanged,
             lengthLabel, &QLabel::setText);
     connect(this, &MainWindow::speedChanged,
             speedLabel, &QLabel::setText);

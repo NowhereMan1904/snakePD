@@ -33,7 +33,7 @@ public slots:
     ChunkSnake* moveChunk();
 
 signals:
-    void lenghtChanged(QString);
+    void lengthChanged(QString);
 
 private:
     constexpr static int shift = 10;

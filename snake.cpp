@@ -52,7 +52,7 @@ ChunkSnake* Snake::addChunk()
     auto chunk = new ChunkSnake{chunks.back()->position()};
     chunks << chunk;
 
-    emit lenghtChanged(QString::number(chunks.size()));
+    emit lengthChanged(QString::number(chunks.size()));
     return chunk;
 }
 
