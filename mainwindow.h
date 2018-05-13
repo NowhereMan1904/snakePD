@@ -14,12 +14,9 @@ class MainWindow : public QWidget
 
 public:
     MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    ~MainWindow() override = default;
 
-    void keyPressEvent(QKeyEvent *event);
-
-    void endGame();
-    void winGame();
+    void keyPressEvent(QKeyEvent *event) override;
 
 public slots:
     void eatFruit();
@@ -32,7 +29,9 @@ private:
     void initializeHash();
     QPoint checkFruit();
 
-    constexpr static int shift = 10;
+    void endGame();
+    void winGame();
+
     QGraphicsView* view;
     QGraphicsScene* scene;
 

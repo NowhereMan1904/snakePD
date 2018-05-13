@@ -3,8 +3,6 @@
 
 #include <QTimer>
 #include <QGraphicsObject>
-#include <QList>
-#include <QHash>
 
 #include "chunksnake.h"
 #include "fruit.h"

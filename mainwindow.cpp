@@ -79,11 +79,6 @@ MainWindow::MainWindow(QWidget *parent)
     timer->start(time);
 }
 
-MainWindow::~MainWindow()
-{
-
-}
-
 void MainWindow::keyPressEvent(QKeyEvent* event)
 {
     if (snake->canChangeDirection()) {
