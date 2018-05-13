@@ -1,9 +1,5 @@
 #include "snake.h"
 
-#include <QDebug>
-#include <QInputEvent>
-#include <QPainter>
-
 Snake::Snake(QPoint position)
     : dir {Direction::Stop},
       enable {true},

@@ -1,8 +1,6 @@
 #include "mainwindow.h"
-#include "snake.h"
 
 #include <QLayout>
-#include <QDebug>
 #include <QInputEvent>
 #include <QRandomGenerator>
 #include <QLabel>
@@ -11,7 +9,6 @@ inline uint qHash(QPoint key, uint seed)
 {
     return qHash(QPair<int,int>{key.x(), key.y()}, seed);
 }
-
 
 MainWindow::MainWindow(QWidget *parent)
     : QWidget{parent},
@@ -63,6 +60,7 @@ MainWindow::MainWindow(QWidget *parent)
     scene->addItem(snake->getHead());
 
     initializeHash();
+#include <QList>
 
     fruit = new Fruit{checkFruit()};
     scene->addItem(fruit);

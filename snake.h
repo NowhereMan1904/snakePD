@@ -1,8 +1,7 @@
 #ifndef SNAKE_H
 #define SNAKE_H
 
-#include <QTimer>
-#include <QGraphicsObject>
+#include <QObject>
 
 #include "chunksnake.h"
 #include "fruit.h"

@@ -1,13 +1,10 @@
 #ifndef FRUIT_H
 #define FRUIT_H
 
-#include <QGraphicsObject>
-#include<QPoint>
+#include <QGraphicsItem>
 
-class Fruit : public QGraphicsObject
+class Fruit : public QGraphicsItem
 {
-    Q_OBJECT
-
 public:
     Fruit(QPoint);
     ~Fruit() override = default;
