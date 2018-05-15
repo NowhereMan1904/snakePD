@@ -7,7 +7,7 @@
 
 inline uint qHash(QPoint key, uint seed)
 {
-    return qHash(QPair<int,int>{key.x(), key.y()}, seed);
+    return qHash(qMakePair(key.x(), key.y()), seed);
 }
 
 MainWindow::MainWindow(QWidget *parent)
