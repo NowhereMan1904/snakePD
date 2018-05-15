@@ -28,6 +28,8 @@ public:
 
     int getLength() const;
 
+    void hide();
+
 public slots:
     ChunkSnake* addChunk();
     ChunkSnake* moveChunk();

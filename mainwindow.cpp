@@ -143,8 +143,12 @@ void MainWindow::movement()
 void MainWindow::endGame()
 {
     timer->stop();
+    snake->hide();
+    fruit->hide();
     auto text = new QGraphicsSimpleTextItem{"HAI PERSO PORCODDIO"};
     text->setPen(QPen{Qt::red});
+    text->setPos(view->width() /2 - text->boundingRect().center().x(),
+                 view->height()/2 - text->boundingRect().center().y());
     scene->addItem(text);
 }
 

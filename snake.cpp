@@ -47,6 +47,12 @@ int Snake::getLength() const
     return chunks.size();
 }
 
+void Snake::hide()
+{
+    for (auto c : chunks)
+        c->hide();
+}
+
 ChunkSnake* Snake::addChunk()
 {
     auto chunk = new ChunkSnake{chunks.back()->position()};
