@@ -4,7 +4,6 @@
 #include <QObject>
 
 #include "chunksnake.h"
-#include "fruit.h"
 
 class Snake : public QObject
 {
