@@ -37,9 +37,9 @@ bool Snake::canChangeDirection()
     return false;
 }
 
-void Snake::changeColor(Fruit* fruit)
+void Snake::changeColor(QColor color)
 {
-    currentColor = fruit->getColor();
+    currentColor = color;
 }
 
 int Snake::getLength() const
@@ -56,6 +56,7 @@ void Snake::hide()
 ChunkSnake* Snake::addChunk()
 {
     auto chunk = new ChunkSnake{chunks.back()->position()};
+    chunk->setColor(Qt::transparent);
     chunks << chunk;
 
     emit lengthChanged(QString::number(chunks.size()));

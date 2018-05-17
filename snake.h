@@ -24,7 +24,7 @@ public:
 
     bool canChangeDirection();
 
-    void changeColor(Fruit*);
+    void changeColor(QColor);
 
     int getLength() const;
 

@@ -111,7 +111,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
 void MainWindow::eatFruit()
 {
     if (snake->getHead()->position() == fruit->position()) {
-        snake->changeColor(fruit);
+        snake->changeColor(fruit->getColor());
         delete fruit;
         fruit = new Fruit{checkFruit()};
         scene->addItem(fruit);
