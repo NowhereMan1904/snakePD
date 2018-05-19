@@ -39,7 +39,6 @@ MainWindow::MainWindow(QWidget *parent)
     lengthText->setStyleSheet("font-weight: bold");
     labelLayout->addWidget(lengthText);
     labelLayout->addWidget(lengthLabel);
-    labelWidget->setFixedHeight(22);
     labelWidget->setLayout(labelLayout);
     auto speedLabel = new QLabel{QString::number(1000/time)};
     speedLabel->setStyleSheet("font-weight: bold");
