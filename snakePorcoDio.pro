@@ -28,10 +28,12 @@ SOURCES += \
         mainwindow.cpp \
         snake.cpp \
         fruit.cpp \
-        chunksnake.cpp
+        chunksnake.cpp \
+    menu.cpp
 
 HEADERS += \
         mainwindow.h \
         snake.h \
         fruit.h \
-        chunksnake.h
+        chunksnake.h \
+    menu.h

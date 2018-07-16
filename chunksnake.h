@@ -2,10 +2,12 @@
 #define CHUNKSNAKE_H
 
 #include <QGraphicsItem>
+#include <QJsonObject>
 
 class ChunkSnake : public QGraphicsItem
 {
 public:
+    ChunkSnake();
     ChunkSnake(const QPoint&);
     ~ChunkSnake() override = default;
 
@@ -18,6 +20,9 @@ public:
     QPoint& position();
 
     void setColor(QColor);
+
+    void readJSON(const QJsonObject &json);
+    void writeJSON(QJsonObject &json) const;
 
 private:
     QPoint pos;

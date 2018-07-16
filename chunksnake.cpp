@@ -2,6 +2,11 @@
 
 #include <QPainter>
 
+ChunkSnake::ChunkSnake()
+{
+
+}
+
 ChunkSnake::ChunkSnake(const QPoint& position)
     : pos{position}
 {
@@ -37,4 +42,29 @@ QPoint& ChunkSnake::position()
 void ChunkSnake::setColor(QColor c)
 {
     color = c;
+}
+
+void ChunkSnake::readJSON(const QJsonObject& json)
+{
+    pos.setX(json["pos"]["x"].toInt());
+    pos.setY(json["pos"]["y"].toInt());
+
+    color.setRed(json["color"]["red"].toInt());
+    color.setGreen(json["color"]["green"].toInt());
+    color.setBlue(json["color"]["blue"].toInt());
+}
+
+void ChunkSnake::writeJSON(QJsonObject& json) const
+{
+    QJsonObject posObject;
+    posObject["x"] = pos.x();
+    posObject["y"] = pos.y();
+
+    QJsonObject colorObject;
+    colorObject["red"] = color.red();
+    colorObject["green"] = color.green();
+    colorObject["blue"] = color.blue();
+
+    json["pos"] = posObject;
+    json["color"] = colorObject;
 }

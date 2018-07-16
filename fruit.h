@@ -2,6 +2,7 @@
 #define FRUIT_H
 
 #include <QGraphicsItem>
+#include <QJsonObject>
 
 class Fruit : public QGraphicsItem
 {
@@ -18,6 +19,10 @@ public:
     QPoint& position();
 
     QColor getColor() const;
+
+    void readJSON(const QJsonObject &json);
+    void writeJSON(QJsonObject &json) const;
+
 
 private:
     QPoint pos; // position of the fruit

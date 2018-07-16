@@ -1,5 +1,6 @@
 #include "fruit.h"
 
+#include <QJsonArray>
 #include <QPainter>
 #include <QRandomGenerator>
 
@@ -42,4 +43,29 @@ QPoint& Fruit::position()
 QColor Fruit::getColor() const
 {
     return color;
+}
+
+void Fruit::readJSON(const QJsonObject& json)
+{
+    pos.setX(json["pos"]["x"].toInt());
+    pos.setY(json["pos"]["y"].toInt());
+
+    color.setRed(json["color"]["red"].toInt());
+    color.setGreen(json["color"]["green"].toInt());
+    color.setBlue(json["color"]["blue"].toInt());
+}
+
+void Fruit::writeJSON(QJsonObject& json) const
+{
+    QJsonObject posObject;
+    posObject["x"] = pos.x();
+    posObject["y"] = pos.y();
+
+    QJsonObject colorObject;
+    colorObject["red"] = color.red();
+    colorObject["green"] = color.green();
+    colorObject["blue"] = color.blue();
+
+    json["pos"] = posObject;
+    json["color"] = colorObject;
 }
