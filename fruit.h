@@ -23,6 +23,7 @@ public:
     void readJSON(const QJsonObject &json);
     void writeJSON(QJsonObject &json) const;
 
+    void move(const QPoint&);
 
 private:
     QPoint pos; // position of the fruit

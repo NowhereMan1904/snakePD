@@ -5,12 +5,8 @@
 #include <QRandomGenerator>
 
 Fruit::Fruit(QPoint p)
-    : pos {p}
 {
-    auto r = QRandomGenerator::global()->bounded(100,256);
-    auto g = QRandomGenerator::global()->bounded(100,256);
-    auto b = QRandomGenerator::global()->bounded(100,256);
-    color = QColor{r,g,b};
+    move(p);
 }
 
 QRectF Fruit::boundingRect() const
@@ -68,4 +64,16 @@ void Fruit::writeJSON(QJsonObject& json) const
 
     json["pos"] = posObject;
     json["color"] = colorObject;
+}
+
+void Fruit::move(const QPoint& p)
+{
+    prepareGeometryChange();
+
+    pos = p;
+
+    auto r = QRandomGenerator::global()->bounded(100,256);
+    auto g = QRandomGenerator::global()->bounded(100,256);
+    auto b = QRandomGenerator::global()->bounded(100,256);
+    color = QColor{r,g,b};
 }

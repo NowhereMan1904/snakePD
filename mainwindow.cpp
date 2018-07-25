@@ -5,6 +5,7 @@
 #include <QRandomGenerator>
 #include <QLabel>
 #include <QJsonDocument>
+#include <QtDebug>
 
 inline uint qHash(QPoint key, uint seed)
 {
@@ -154,10 +155,9 @@ void MainWindow::readJSON(const QJsonObject& json)
 void MainWindow::eatFruit()
 {
     if (snake->getHead()->position() == fruit->position()) {
+        qWarning() << "if entered";
         snake->changeColor(fruit->getColor());
-        delete fruit;
-        fruit = new Fruit{checkFruit()};
-        scene->addItem(fruit);
+        fruit->move(checkFruit());
         scene->addItem(snake->addChunk());
         checkboard[snake->getTail()->position()] = false;
 
@@ -170,6 +170,7 @@ void MainWindow::eatFruit()
 
             emit speedChanged(QString::number(1000/time));
         }
+    qDebug() << "if exited";
     }
 }
 
