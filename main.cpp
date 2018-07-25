@@ -1,3 +1,5 @@
+// great rewriting soon :)
+
 #include "mainwindow.h"
 #include <QApplication>
 
