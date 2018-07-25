@@ -30,12 +30,6 @@ QPoint Fruit::position() const
     return pos;
 }
 
-QPoint& Fruit::position()
-{
-    prepareGeometryChange();
-    return pos;
-}
-
 QColor Fruit::getColor() const
 {
     return color;

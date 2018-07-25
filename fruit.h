@@ -16,7 +16,6 @@ public:
                QWidget*) override;
 
     QPoint position() const;
-    QPoint& position();
 
     QColor getColor() const;
 
