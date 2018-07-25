@@ -1,6 +1,7 @@
 #include "menu.h"
+#include "sessionmanager.h"
 
-Menu::Menu(QWidget *parent) : QWidget(parent)
+Menu::Menu(GameController* gameController)
 {
     auto layout = new QVBoxLayout(this);
     auto startButton = new QPushButton("Start");
@@ -16,17 +17,12 @@ Menu::Menu(QWidget *parent) : QWidget(parent)
     layout->addWidget(settingsButton);
 
     connect(startButton, &QPushButton::clicked,
-            this, &Menu::start);
+            gameController, &GameController::start);
     connect(saveButton, &QPushButton::clicked,
-            this, &Menu::save);
+            gameController->getSessionManager(), &SessionManager::saveToJSON);
     connect(loadButton, &QPushButton::clicked,
-            this, &Menu::load);
+            gameController->getSessionManager(), &SessionManager::loadFromJSON);
     connect(exitButton, &QPushButton::clicked,
-            this, &Menu::exit);
+            gameController, &GameController::exit);
 
-}
-
-void Menu::exit()
-{
-    QApplication::quit();
 }

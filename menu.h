@@ -1,6 +1,8 @@
 #ifndef MENU_H
 #define MENU_H
 
+#include "gamecontroller.h"
+
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QPushButton>
@@ -10,7 +12,7 @@ class Menu : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Menu(QWidget *parent = nullptr);
+    explicit Menu(GameController*);
 
 signals:
     void start();
@@ -18,7 +20,6 @@ signals:
     void load();
 
 public slots:
-    void exit();
 };
 
 #endif // MENU_H

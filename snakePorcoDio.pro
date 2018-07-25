@@ -29,11 +29,17 @@ SOURCES += \
         snake.cpp \
         fruit.cpp \
         chunksnake.cpp \
-    menu.cpp
+    menu.cpp \
+    gamecontroller.cpp \
+    snakecontroller.cpp \
+    sessionmanager.cpp
 
 HEADERS += \
         mainwindow.h \
         snake.h \
         fruit.h \
         chunksnake.h \
-    menu.h
+    menu.h \
+    gamecontroller.h \
+    snakecontroller.h \
+    sessionmanager.h

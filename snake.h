@@ -21,8 +21,6 @@ public:
     ChunkSnake* getHead();
     ChunkSnake* getTail();
 
-    bool canChangeDirection();
-
     void changeColor(QColor);
 
     int getLength() const;
@@ -33,17 +31,16 @@ public:
     void readJSON(const QJsonObject &json);
     void writeJSON(QJsonObject &json) const;
 
+    QColor getCurrentColor() const;
+
 public slots:
     ChunkSnake* addChunk();
-    ChunkSnake* moveChunk();
 
 signals:
     void lengthChanged(QString);
 
 private:
-    constexpr static int shift = 10;
     enum Direction dir;
-    bool enable;
     QColor currentColor;
 
     QList<ChunkSnake*> chunks;

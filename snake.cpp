@@ -4,7 +4,6 @@
 
 Snake::Snake(QPoint position)
     : dir {Direction::Stop},
-      enable {true},
       currentColor {Qt::white}
 {
     chunks << new ChunkSnake{position};
@@ -28,15 +27,6 @@ ChunkSnake* Snake::getHead()
 ChunkSnake* Snake::getTail()
 {
     return chunks.back();
-}
-
-bool Snake::canChangeDirection()
-{
-    if (enable) {
-        enable = false;
-        return true;
-    }
-    return false;
 }
 
 void Snake::changeColor(QColor color)
@@ -109,50 +99,7 @@ ChunkSnake* Snake::addChunk()
     return chunk;
 }
 
-ChunkSnake* Snake::moveChunk()
+QColor Snake::getCurrentColor() const
 {
-    enable = true;
-
-    auto p = chunks.back();
-
-    switch (dir) {
-    case Direction::Up:
-        p->position() = QPoint{
-                        chunks.front()->position().rx(),
-                        chunks.front()->position().ry() - shift};
-        break;
-    case Direction::Down:
-        p->position() = QPoint{
-                        chunks.front()->position().rx(),
-                        chunks.front()->position().ry() + shift};
-        break;
-    case Direction::Left:
-        p->position() = QPoint{
-                        chunks.front()->position().rx() - shift,
-                        chunks.front()->position().ry()};
-        break;
-    case Direction::Right:
-        p->position() = QPoint{
-                        chunks.front()->position().rx() + shift,
-                        chunks.front()->position().ry()};
-        break;
-    default:
-        break;
-    }
-
-    p->position().rx() =
-            p->position().rx()<5 ?
-                400-5 :
-                p->position().rx()%400;
-    p->position().ry() =
-            p->position().ry()<5 ?
-                300-5 :
-                p->position().ry()%300;
-
-    p->setColor(currentColor);
-
-    chunks.removeLast();
-    chunks.push_front(p);
-
-    return p;
+    return currentColor;
 }
