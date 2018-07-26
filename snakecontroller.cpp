@@ -8,6 +8,11 @@ SnakeController::SnakeController()
     snake = new Snake{QPoint{205, 155}};
 }
 
+SnakeController::~SnakeController()
+{
+    delete snake;
+}
+
 bool SnakeController::canChangeDirection()
 {
     if (enable) {

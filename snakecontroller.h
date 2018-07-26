@@ -9,6 +9,7 @@ class SnakeController
 {
 public:
     explicit SnakeController();
+    ~SnakeController();
 
     void changeDirection(QKeyEvent*);
 
