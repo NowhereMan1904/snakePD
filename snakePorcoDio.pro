@@ -24,21 +24,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
-        main.cpp \
-        mainwindow.cpp \
-        snake.cpp \
-        fruit.cpp \
-        chunksnake.cpp \
+    main.cpp \
+    mainwindow.cpp \
+    snake.cpp \
+    fruit.cpp \
+    chunksnake.cpp \
     menu.cpp \
     gamecontroller.cpp \
     snakecontroller.cpp \
     sessionmanager.cpp
 
 HEADERS += \
-        mainwindow.h \
-        snake.h \
-        fruit.h \
-        chunksnake.h \
+    mainwindow.h \
+    snake.h \
+    fruit.h \
+    chunksnake.h \
     menu.h \
     gamecontroller.h \
     snakecontroller.h \

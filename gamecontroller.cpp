@@ -54,9 +54,8 @@ QPoint GameController::checkFruit()
     do {
         x = QRandomGenerator::global()->bounded(40);
         y = QRandomGenerator::global()->bounded(30);
-    } while (checkboard[QPoint{x*10+5,y*10+5}] == false);
-//    return QPoint{x*10+5,y*10+5};
-    return QPoint{205,145};
+    } while (checkboard.value(QPoint{x*10+5,y*10+5}) == false);
+    return QPoint{x*10+5,y*10+5};
 }
 
 void GameController::eatFruit()
@@ -66,7 +65,8 @@ void GameController::eatFruit()
         snake->changeColor(fruit->getColor());
         fruit->move(checkFruit());
         mainWindow->getScene()->addItem(snake->addChunk());
-        checkboard[snake->getTail()->position()] = false;
+        checkboard.insert(snake->getTail()->position(),
+                          false);
 
         if (snake->getLength() == 40*30)
             winGame();
@@ -83,8 +83,10 @@ void GameController::eatFruit()
 void GameController::movement()
 {
     auto snake = snakeController->getSnake();
-    checkboard[snake->getTail()->position()] = true;
+    checkboard.insert(snake->getTail()->position(),
+                      true);
 
+    /*
     for (int i = 5; i<400; i+=10) {
         for (int j = 5; j<300; j+=10) {
             std::cout << static_cast<int>(checkboard[QPoint(i,j)]);
@@ -92,15 +94,16 @@ void GameController::movement()
         std::cout << std::endl;
     }
     std::cout << "\n\n\n";
-
+    */
 
     snakeController->moveChunk();
 
 
-    if (checkboard[snake->getHead()->position()] == false)
+    if (checkboard.value(snake->getHead()->position()) == false)
         endGame();
     else
-        checkboard[snake->getHead()->position()] = false;
+        checkboard.insert(snake->getHead()->position(),
+                          false);
 }
 
 void GameController::start()
@@ -119,9 +122,11 @@ void GameController::initializeHash()
     checkboard.reserve(40*30);
     for (int i = 5; i<400; i+=10)
         for (int j = 5; j<300; j+=10)
-            checkboard.insert(QPoint{i,j}, true);
+            checkboard.insert(QPoint{i,j},
+                              true);
 
-    checkboard[snakeController->getSnake()->getHead()->position()] = false;
+    checkboard.insert(snakeController->getSnake()->getHead()->position(),
+                      false);
 }
 
 void GameController::endGame()
@@ -159,13 +164,16 @@ void GameController::readJSON()
     time = json["time"].toInt();
 
     checkboard.clear();
+    checkboard.reserve(40*30);
     for (int i = 5; i<400; i+=10)
         for (int j = 5; j<300; j+=10)
-            checkboard[QPoint{i,j}] = true;
+            checkboard.insert(QPoint{i,j},
+                              true);
 
     for (auto c : snakeController->getSnake()->getChunks()) {
         mainWindow->getScene()->addItem(c);
-        checkboard[c->position()] = false;
+        checkboard.insert(c->position(),
+                          false);
     }
 }
 
