@@ -5,20 +5,20 @@
 #include "snake.h"
 #include <QObject>
 
-class SnakeController : public QObject
+class SnakeController
 {
-    Q_OBJECT
 public:
-    explicit SnakeController(Snake*);
+    explicit SnakeController();
 
-    bool canChangeDirection();
+    void changeDirection(QKeyEvent*);
 
-signals:
+    Snake* getSnake() const;
 
-public slots:
-    ChunkSnake* moveChunk();
+    void moveChunk();
 
 private:
+    bool canChangeDirection();
+
     Snake* snake;
     bool enable;
     constexpr static int shift = 10;

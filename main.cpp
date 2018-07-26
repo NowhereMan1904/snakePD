@@ -1,13 +1,12 @@
 // great rewriting soon :)
 
-#include "mainwindow.h"
+#include "gamecontroller.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
+    GameController gameController;
 
     return a.exec();
 }

@@ -2,13 +2,14 @@
 #define MAINWINDOW_H
 
 #include "menu.h"
-#include "gamecontroller.h"
 #include "snake.h"
 
 #include <QWidget>
 #include <QGraphicsView>
 #include <QStackedLayout>
 #include <QJsonObject>
+
+class GameController;
 
 class MainWindow : public QWidget
 {
@@ -22,14 +23,15 @@ public:
 
     QGraphicsScene* getScene() const;
     void closeMenu() const;
+    void showMenu() const;
 
 public slots:
 
 signals:
     void speedChanged(QString);
+    void keyPressed(QKeyEvent*);
 
 private:
-    void showMenu();
 
     QGraphicsView* view;
     QGraphicsScene* scene;

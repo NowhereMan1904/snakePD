@@ -1,4 +1,5 @@
 #include "menu.h"
+#include "gamecontroller.h"
 #include "sessionmanager.h"
 
 Menu::Menu(GameController* gameController)
@@ -19,9 +20,9 @@ Menu::Menu(GameController* gameController)
     connect(startButton, &QPushButton::clicked,
             gameController, &GameController::start);
     connect(saveButton, &QPushButton::clicked,
-            gameController->getSessionManager(), &SessionManager::saveToJSON);
+            gameController, &GameController::writeJSON);
     connect(loadButton, &QPushButton::clicked,
-            gameController->getSessionManager(), &SessionManager::loadFromJSON);
+            gameController, &GameController::readJSON);
     connect(exitButton, &QPushButton::clicked,
             gameController, &GameController::exit);
 

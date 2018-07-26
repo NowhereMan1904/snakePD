@@ -1,11 +1,11 @@
 #include "snakecontroller.h"
 
-SnakeController::SnakeController(Snake* s)
-    : QObject(nullptr),
-      snake {s},
-      enable {true}
-{
+#include <QKeyEvent>
 
+SnakeController::SnakeController()
+    : enable {true}
+{
+    snake = new Snake{QPoint{205, 155}};
 }
 
 bool SnakeController::canChangeDirection()
@@ -17,7 +17,38 @@ bool SnakeController::canChangeDirection()
     return false;
 }
 
-ChunkSnake* SnakeController::moveChunk()
+Snake* SnakeController::getSnake() const
+{
+    return snake;
+}
+
+void SnakeController::changeDirection(QKeyEvent* e)
+{
+    if (canChangeDirection()) {
+            switch (e->key()) {
+                case Qt::Key_Left:
+                    if (snake->direction() != Snake::Direction::Right)
+                        snake->setDirection(Snake::Direction::Left);
+                    break;
+                case Qt::Key_Right:
+                    if (snake->direction() != Snake::Direction::Left)
+                        snake->setDirection(Snake::Direction::Right);
+                    break;
+                case Qt::Key_Up:
+                    if (snake->direction() != Snake::Direction::Down)
+                        snake->setDirection(Snake::Direction::Up);
+                    break;
+                case Qt::Key_Down:
+                    if (snake->direction() != Snake::Direction::Up)
+                        snake->setDirection(Snake::Direction::Down);
+                    break;
+                default:
+                    break;
+            }
+        }
+}
+
+void SnakeController::moveChunk()
 {
     enable = true;
 
@@ -49,18 +80,16 @@ ChunkSnake* SnakeController::moveChunk()
     }
 
     p->position().rx() =
-            p->position().rx()<5 ?
+            p->position().x()<5 ?
                 400-5 :
-                p->position().rx()%400;
+                p->position().x()%400;
     p->position().ry() =
-            p->position().ry()<5 ?
+            p->position().y()<5 ?
                 300-5 :
-                p->position().ry()%300;
+                p->position().y()%300;
 
     p->setColor(snake->getCurrentColor());
 
     snake->getChunks().removeLast();
     snake->getChunks().push_front(p);
-
-    return p;
 }

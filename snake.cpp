@@ -53,7 +53,7 @@ void Snake::hide()
 void Snake::readJSON(const QJsonObject& json)
 {
     dir = static_cast<Direction>(json["direction"].toInt());
-    enable = json["enable"].toBool();
+
     currentColor.setRed(json["currentColor"]["red"].toInt());
     currentColor.setGreen(json["currentColor"]["green"].toInt());
     currentColor.setBlue(json["currentColor"]["blue"].toInt());
@@ -84,7 +84,6 @@ void Snake::writeJSON(QJsonObject& json) const
     }
 
     json["direction"] = static_cast<int>(dir);
-    json["enable"] = enable;
     json["currentColor"] = colorObject;
     json["chunks"] = chunkArray;
 }

@@ -13,22 +13,23 @@
 class GameController : public QObject
 {
     Q_OBJECT
+
 public:
     explicit GameController(QObject *parent = nullptr);
+    ~GameController();
 
     SessionManager* getSessionManager() const;
 
     Fruit* getFruit() const;
-
-    bool event(QEvent*) override;
-
-signals:
 
 public slots:
     void eatFruit();
     void movement();
     void start();
     void exit();
+    void keyHandler(QKeyEvent*);
+    void readJSON();
+    void writeJSON();
 
 private:
     void initializeHash();
@@ -39,7 +40,6 @@ private:
 
     SessionManager* sessionManager;
     SnakeController* snakeController;
-    Snake* snake;
     Fruit* fruit;
     MainWindow* mainWindow;
 

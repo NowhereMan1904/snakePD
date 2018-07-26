@@ -2,6 +2,7 @@
 #define SESSIONMANAGER_H
 
 #include <QObject>
+#include <QJsonObject>
 
 class SessionManager : public QObject
 {
@@ -9,11 +10,12 @@ class SessionManager : public QObject
 public:
     explicit SessionManager(QObject *parent = nullptr);
 
+    void loadFromJSON(QJsonObject&);
+    void saveToJSON(QJsonObject&);
+
 signals:
 
 public slots:
-    void loadFromJSON();
-    void saveToJSON();
 };
 
 #endif // SESSIONMANAGER_H

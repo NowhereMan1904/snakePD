@@ -1,12 +1,12 @@
 #ifndef MENU_H
 #define MENU_H
 
-#include "gamecontroller.h"
-
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QApplication>
+
+class GameController;
 
 class Menu : public QWidget
 {

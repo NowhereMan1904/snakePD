@@ -1,15 +1,11 @@
 #include "mainwindow.h"
+#include "gamecontroller.h"
 
 #include <QLayout>
 #include <QInputEvent>
 #include <QRandomGenerator>
 #include <QLabel>
 #include <QJsonDocument>
-
-inline uint qHash(QPoint key, uint seed)
-{
-    return qHash(qMakePair(key.x(), key.y()), seed);
-}
 
 MainWindow::MainWindow(GameController* gameController,
                        Snake* snake)
@@ -74,6 +70,8 @@ MainWindow::MainWindow(GameController* gameController,
             lengthLabel, &QLabel::setText);
 //    connect(this, &MainWindow::speedChanged,
 //            speedLabel, &QLabel::setText);
+    connect(this, &MainWindow::keyPressed,
+            gameController, &GameController::keyHandler);
 
 }
 
@@ -83,79 +81,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::keyPressEvent(QKeyEvent* event)
 {
-    if (event->key() == Qt::Key_Space) {
-        showMenu();
-        event->accept();
-    }
+    emit keyPressed(event);
 }
 
-void MainWindow::readJSON(const QJsonObject& json)
+void MainWindow::showMenu() const
 {
-    QJsonObject fruitObject = json["fruit"].toObject();
-    fruit->readJSON(fruitObject);
-
-    QJsonObject snakeObject = json["snake"].toObject();
-    snake->readJSON(snakeObject);
-
-    time = json["time"].toInt();
-
-    checkboard.clear();
-    for (int i = 5; i<width(); i+=10)
-        for (int j = 5; j<height(); j+=10)
-            checkboard[QPoint{i,j}] = true;
-
-    auto chunks = snake->getChunks();
-    for (auto c : chunks) {
-        scene->addItem(c);
-        checkboard[c->position()] = false;
-    }
-}
-
-void MainWindow::loadFromJSON()
-{
-    QFile loadFile("save.Json");
-
-    if (!loadFile.open(QIODevice::ReadOnly)) {
-        qWarning("Couldn't open save file.");
-        return;
-    }
-
-    QByteArray saveData = loadFile.readAll();
-    QJsonDocument loadDoc(QJsonDocument::fromJson(saveData));
-    readJSON(loadDoc.object());
-}
-
-void MainWindow::writeJSON(QJsonObject &json) const
-{
-    QJsonObject fruitObject;
-    fruit->writeJSON(fruitObject);
-    json["fruit"] = fruitObject;
-
-    QJsonObject snakeObject;
-    snake->writeJSON(snakeObject);
-    json["snake"] = snakeObject;
-
-    json["time"] = time;
-}
-
-void MainWindow::saveToJSON()
-{
-    QFile saveFile("save.Json");
-
-    if (!saveFile.open(QIODevice::WriteOnly)) {
-        qWarning("Couldn't open save file.");
-        return;
-    }
-
-    QJsonObject gameObject;
-    writeJSON(gameObject);
-    QJsonDocument saveDoc(gameObject);
-    saveFile.write(saveDoc.toJson());
-}
-
-void MainWindow::showMenu()
-{
-    timer->stop();
     stackedLayout->setCurrentWidget(menu);
 }
 
