@@ -3,11 +3,6 @@
 #include <QFile>
 #include <QJsonDocument>
 
-SessionManager::SessionManager(QObject *parent) : QObject(parent)
-{
-
-}
-
 void SessionManager::loadFromJSON(QJsonObject& object)
 {
     QFile loadFile("save.Json");

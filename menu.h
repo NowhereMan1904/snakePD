@@ -14,12 +14,6 @@ class Menu : public QWidget
 public:
     explicit Menu(GameController*);
 
-signals:
-    void start();
-    void save();
-    void load();
-
-public slots:
 };
 
 #endif // MENU_H

@@ -25,14 +25,11 @@ public:
     void closeMenu() const;
     void showMenu() const;
 
-public slots:
-
 signals:
     void speedChanged(QString);
     void keyPressed(QKeyEvent*);
 
 private:
-
     QGraphicsView* view;
     QGraphicsScene* scene;
 
