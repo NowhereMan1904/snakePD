@@ -65,8 +65,10 @@ void GameController::eatFruit()
         snake->changeColor(fruit->getColor());
         fruit->move(checkFruit());
         mainWindow->getScene()->addItem(snake->addChunk());
+
+        // not really sure about next line
         checkboard.insert(snake->getTail()->position(),
-                          false);
+                         false);
 
         if (snake->getLength() == 40*30)
             winGame();
@@ -86,18 +88,7 @@ void GameController::movement()
     checkboard.insert(snake->getTail()->position(),
                       true);
 
-    /*
-    for (int i = 5; i<400; i+=10) {
-        for (int j = 5; j<300; j+=10) {
-            std::cout << static_cast<int>(checkboard[QPoint(i,j)]);
-        }
-        std::cout << std::endl;
-    }
-    std::cout << "\n\n\n";
-    */
-
     snakeController->moveChunk();
-
 
     if (checkboard.value(snake->getHead()->position()) == false)
         endGame();
@@ -119,7 +110,7 @@ void GameController::exit()
 
 void GameController::initializeHash()
 {
-    checkboard.reserve(40*30);
+    checkboard.reserve(1300);
     for (int i = 5; i<400; i+=10)
         for (int j = 5; j<300; j+=10)
             checkboard.insert(QPoint{i,j},

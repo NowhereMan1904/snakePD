@@ -66,13 +66,12 @@ MainWindow::MainWindow(GameController* gameController,
 
     scene->addItem(gameController->getFruit());
 
-    connect(snake, &Snake::lengthChanged,
-            lengthLabel, &QLabel::setText);
+//    connect(snake, &Snake::lengthChanged,
+//            lengthLabel, &QLabel::setText);
 //    connect(this, &MainWindow::speedChanged,
 //            speedLabel, &QLabel::setText);
     connect(this, &MainWindow::keyPressed,
             gameController, &GameController::keyHandler);
-
 }
 
 MainWindow::~MainWindow()

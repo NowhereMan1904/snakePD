@@ -102,3 +102,8 @@ QColor Snake::getCurrentColor() const
 {
     return currentColor;
 }
+
+void Snake::cycle()
+{
+    chunks.move(chunks.size()-1, 0);
+}

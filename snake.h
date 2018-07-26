@@ -24,7 +24,8 @@ public:
     void changeColor(QColor);
 
     int getLength() const;
-    QList<ChunkSnake*> getChunks() const;
+    QList<ChunkSnake*> getChunks() const;   // do NOT use this function to
+                                            // modify the chunk list
 
     void hide();
 
@@ -32,6 +33,8 @@ public:
     void writeJSON(QJsonObject &json) const;
 
     QColor getCurrentColor() const;
+
+    void cycle();
 
 public slots:
     ChunkSnake* addChunk();

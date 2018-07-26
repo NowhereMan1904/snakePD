@@ -95,6 +95,5 @@ void SnakeController::moveChunk()
 
     p->setColor(snake->getCurrentColor());
 
-    snake->getChunks().removeLast();
-    snake->getChunks().push_front(p);
+    snake->cycle();
 }
