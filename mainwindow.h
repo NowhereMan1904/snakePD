@@ -22,8 +22,8 @@ public:
     void keyPressEvent(QKeyEvent *event) override;
 
     QGraphicsScene* getScene() const;
-    void closeMenu() const;
-    void showMenu() const;
+    void closeMenu();
+    void showMenu();
 
 signals:
     void speedChanged(QString);

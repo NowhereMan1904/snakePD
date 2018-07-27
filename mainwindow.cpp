@@ -83,7 +83,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     emit keyPressed(event);
 }
 
-void MainWindow::showMenu() const
+void MainWindow::showMenu()
 {
     stackedLayout->setCurrentWidget(menu);
 }
@@ -93,7 +93,7 @@ QGraphicsScene* MainWindow::getScene() const
     return scene;
 }
 
-void MainWindow::closeMenu() const
+void MainWindow::closeMenu()
 {
     stackedLayout->setCurrentWidget(view);
 }
