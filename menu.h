@@ -13,6 +13,7 @@ class Menu : public QWidget
     Q_OBJECT
 public:
     explicit Menu(GameController*);
+    ~Menu() override = default;
 
 };
 

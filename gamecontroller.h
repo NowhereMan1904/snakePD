@@ -16,7 +16,7 @@ class GameController : public QObject
 
 public:
     explicit GameController(QObject *parent = nullptr);
-    ~GameController();
+    ~GameController() override;
 
     SessionManager* getSessionManager() const;
 
