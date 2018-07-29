@@ -1,6 +1,7 @@
 // great rewriting soon :)
 
 #include "gamecontroller.h"
+
 #include <QApplication>
 
 int main(int argc, char *argv[])

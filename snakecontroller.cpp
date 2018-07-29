@@ -1,7 +1,5 @@
 #include "snakecontroller.h"
 
-#include <QKeyEvent>
-
 SnakeController::SnakeController()
     : enable {true}
 {
@@ -11,15 +9,6 @@ SnakeController::SnakeController()
 SnakeController::~SnakeController()
 {
     delete snake;
-}
-
-bool SnakeController::canChangeDirection()
-{
-    if (enable) {
-        enable = false;
-        return true;
-    }
-    return false;
 }
 
 Snake* SnakeController::getSnake() const
@@ -32,19 +21,19 @@ void SnakeController::changeDirection(QKeyEvent* e)
     if (canChangeDirection()) {
             switch (e->key()) {
                 case Qt::Key_Left:
-                    if (snake->direction() != Snake::Direction::Right)
+                    if (snake->getDirection() != Snake::Direction::Right)
                         snake->setDirection(Snake::Direction::Left);
                     break;
                 case Qt::Key_Right:
-                    if (snake->direction() != Snake::Direction::Left)
+                    if (snake->getDirection() != Snake::Direction::Left)
                         snake->setDirection(Snake::Direction::Right);
                     break;
                 case Qt::Key_Up:
-                    if (snake->direction() != Snake::Direction::Down)
+                    if (snake->getDirection() != Snake::Direction::Down)
                         snake->setDirection(Snake::Direction::Up);
                     break;
                 case Qt::Key_Down:
-                    if (snake->direction() != Snake::Direction::Up)
+                    if (snake->getDirection() != Snake::Direction::Up)
                         snake->setDirection(Snake::Direction::Down);
                     break;
                 default:
@@ -59,41 +48,44 @@ void SnakeController::moveChunk()
 
     auto p = snake->getTail();
 
-    switch (snake->direction()) {
+    switch (snake->getDirection()) {
     case Snake::Direction::Up:
-        p->position() = QPoint{
-                        snake->getHead()->position().x(),
-                        snake->getHead()->position().y() - shift};
+        p->setPosition(QPoint{snake->getHead()->getPosition().x(),
+                              snake->getHead()->getPosition().y() - shift});
         break;
     case Snake::Direction::Down:
-        p->position() = QPoint{
-                        snake->getHead()->position().x(),
-                        snake->getHead()->position().y() + shift};
+        p->setPosition(QPoint{snake->getHead()->getPosition().x(),
+                              snake->getHead()->getPosition().y() + shift});
         break;
     case Snake::Direction::Left:
-        p->position() = QPoint{
-                        snake->getHead()->position().x() - shift,
-                        snake->getHead()->position().y()};
+        p->setPosition(QPoint{snake->getHead()->getPosition().x() - shift,
+                              snake->getHead()->getPosition().y()});
         break;
     case Snake::Direction::Right:
-        p->position() = QPoint{
-                        snake->getHead()->position().x() + shift,
-                        snake->getHead()->position().y()};
+        p->setPosition(QPoint{snake->getHead()->getPosition().x() + shift,
+                              snake->getHead()->getPosition().y()});
         break;
     default:
         break;
     }
 
-    p->position().rx() =
-            p->position().x()<5 ?
+    p->setX(p->getPosition().x()<5 ?
                 400-5 :
-                p->position().x()%400;
-    p->position().ry() =
-            p->position().y()<5 ?
+                p->getPosition().x()%400);
+    p->setY(p->getPosition().y()<5 ?
                 300-5 :
-                p->position().y()%300;
+                p->getPosition().y()%300);
 
     p->setColor(snake->getCurrentColor());
 
     snake->cycle();
+}
+
+bool SnakeController::canChangeDirection()
+{
+    if (enable) {
+        enable = false;
+        return true;
+    }
+    return false;
 }

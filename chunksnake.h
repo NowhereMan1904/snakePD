@@ -7,7 +7,7 @@
 class ChunkSnake : public QGraphicsItem
 {
 public:
-    ChunkSnake();
+    ChunkSnake() = default;
     ChunkSnake(const QPoint&);
     ~ChunkSnake() override = default;
 
@@ -16,13 +16,15 @@ public:
                const QStyleOptionGraphicsItem*,
                QWidget*) override;
 
-    QPoint position() const;
-    QPoint& position();
+    QPoint getPosition() const;
+    void   setPosition(QPoint);
 
     void setColor(QColor);
+    void setX(int);
+    void setY(int);
 
-    void readJSON(const QJsonObject &json);
-    void writeJSON(QJsonObject &json) const;
+    void readJSON (const QJsonObject&);
+    void writeJSON(QJsonObject&) const;
 
 private:
     QPoint pos;

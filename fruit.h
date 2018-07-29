@@ -15,19 +15,17 @@ public:
                const QStyleOptionGraphicsItem*,
                QWidget*) override;
 
-    QPoint position() const;
+    QPoint getPosition() const;
+    QColor getColor()    const;
 
-    QColor getColor() const;
-
-    void readJSON(const QJsonObject &json);
-    void writeJSON(QJsonObject &json) const;
+    void readJSON (const QJsonObject&);
+    void writeJSON(QJsonObject&) const;
 
     void move(const QPoint&);
 
 private:
     QPoint pos; // position of the fruit
     QColor color;
-
 };
 
 #endif // FRUIT_H

@@ -1,11 +1,8 @@
 #include "mainwindow.h"
+
 #include "gamecontroller.h"
 
-#include <QLayout>
-#include <QInputEvent>
-#include <QRandomGenerator>
 #include <QLabel>
-#include <QJsonDocument>
 
 MainWindow::MainWindow(GameController* gameController,
                        Snake* snake)
@@ -73,23 +70,19 @@ MainWindow::MainWindow(GameController* gameController,
             gameController, &GameController::keyHandler);
 }
 
-MainWindow::~MainWindow()
-{
-}
-
 void MainWindow::keyPressEvent(QKeyEvent* event)
 {
     emit keyPressed(event);
 }
 
-void MainWindow::showMenu()
-{
-    stackedLayout->setCurrentWidget(menu);
-}
-
 QGraphicsScene* MainWindow::getScene() const
 {
     return scene;
+}
+
+void MainWindow::showMenu()
+{
+    stackedLayout->setCurrentWidget(menu);
 }
 
 void MainWindow::closeMenu()

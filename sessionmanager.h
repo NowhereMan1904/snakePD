@@ -4,13 +4,13 @@
 #include <QJsonObject>
 
 class SessionManager
+
 {
 public:
     explicit SessionManager() = default;
 
-    void loadFromJSON(QJsonObject&);
-    void saveToJSON(QJsonObject&);
-
+    void loadFromJSON(QJsonObject&) const;
+    void saveToJSON  (QJsonObject&) const;
 };
 
 #endif // SESSIONMANAGER_H

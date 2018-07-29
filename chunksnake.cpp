@@ -2,15 +2,9 @@
 
 #include <QPainter>
 
-ChunkSnake::ChunkSnake()
-{
-
-}
-
 ChunkSnake::ChunkSnake(const QPoint& position)
     : pos{position}
 {
-
 }
 
 QRectF ChunkSnake::boundingRect() const
@@ -28,20 +22,32 @@ void ChunkSnake::paint(QPainter* painter,
     painter->drawPoint(pos);
 }
 
-QPoint ChunkSnake::position() const
+QPoint ChunkSnake::getPosition() const
 {
     return pos;
 }
 
-QPoint& ChunkSnake::position()
+void ChunkSnake::setPosition(QPoint p)
 {
     prepareGeometryChange();
-    return pos;
+    pos = p;
 }
 
 void ChunkSnake::setColor(QColor c)
 {
     color = c;
+}
+
+void ChunkSnake::setX(int i)
+{
+    prepareGeometryChange();
+    pos.setX(i);
+}
+
+void ChunkSnake::setY(int i)
+{
+    prepareGeometryChange();
+    pos.setY(i);
 }
 
 void ChunkSnake::readJSON(const QJsonObject& json)

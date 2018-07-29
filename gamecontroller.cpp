@@ -1,9 +1,7 @@
 #include "gamecontroller.h"
 
+#include <QApplication>
 #include <QRandomGenerator>
-#include <QKeyEvent>
-#include <QtDebug>
-#include <iostream>
 
 inline uint qHash(QPoint key, uint seed)
 {
@@ -37,35 +35,26 @@ GameController::~GameController()
     delete snakeController;
 }
 
-void GameController::keyHandler(QKeyEvent* e)
+SessionManager* GameController::getSessionManager() const
 {
-    if (e->key() == Qt::Key_Space) {
-        timer->stop();
-        mainWindow->showMenu();
-    } else
-        snakeController->changeDirection(e);
+    return sessionManager;
 }
 
-QPoint GameController::checkFruit()
+Fruit* GameController::getFruit() const
 {
-    int x,y;
-    do {
-        x = QRandomGenerator::global()->bounded(40);
-        y = QRandomGenerator::global()->bounded(30);
-    } while (checkboard.value(QPoint{x*10+5,y*10+5}) == false);
-    return QPoint{x*10+5,y*10+5};
+    return fruit;
 }
 
 void GameController::eatFruit()
 {
     auto snake = snakeController->getSnake();
-    if (snake->getHead()->position() == fruit->position()) {
-        snake->changeColor(fruit->getColor());
+    if (snake->getHead()->getPosition() == fruit->getPosition()) {
+        snake->setCurrentColor(fruit->getColor());
         fruit->move(checkFruit());
         mainWindow->getScene()->addItem(snake->addChunk());
 
         // not really sure about next line
-        checkboard.insert(snake->getTail()->position(),
+        checkboard.insert(snake->getTail()->getPosition(),
                          false);
 
         if (snake->getLength() == 40*30)
@@ -85,15 +74,15 @@ void GameController::eatFruit()
 void GameController::movement()
 {
     auto snake = snakeController->getSnake();
-    checkboard.insert(snake->getTail()->position(),
+    checkboard.insert(snake->getTail()->getPosition(),
                       true);
 
     snakeController->moveChunk();
 
-    if (checkboard.value(snake->getHead()->position()) == false)
+    if (checkboard.value(snake->getHead()->getPosition()) == false)
         endGame();
     else
-        checkboard.insert(snake->getHead()->position(),
+        checkboard.insert(snake->getHead()->getPosition(),
                           false);
 }
 
@@ -108,6 +97,61 @@ void GameController::exit()
     QApplication::quit();
 }
 
+void GameController::keyHandler(QKeyEvent* e)
+{
+    if (e->key() == Qt::Key_Space) {
+        timer->stop();
+        mainWindow->showMenu();
+    } else
+        snakeController->changeDirection(e);
+}
+
+void GameController::readJSON()
+{
+    QJsonObject json;
+
+    sessionManager->loadFromJSON(json);
+
+    QJsonObject fruitObject = json["fruit"].toObject();
+    fruit->readJSON(fruitObject);
+
+    QJsonObject snakeObject = json["snake"].toObject();
+    snakeController->getSnake()->readJSON(snakeObject);
+
+    checkboard.clear();
+    checkboard.reserve(40*30);
+    for (int i = 5; i<400; i+=10)
+        for (int j = 5; j<300; j+=10)
+            checkboard.insert(QPoint{i,j},
+                              true);
+
+    for (auto c : snakeController->getSnake()->getChunks()) {
+        mainWindow->getScene()->addItem(c);
+        checkboard.insert(c->getPosition(),
+                          false);
+    }
+
+    emit lengthChanged(QString::number(snakeController->
+                                       getSnake()->
+                                       getLength()));
+    emit speedChanged(QString::number(1000/calculateSpeed()));
+}
+
+void GameController::writeJSON()
+{
+    QJsonObject json;
+
+    QJsonObject fruitObject;
+    fruit->writeJSON(fruitObject);
+    json["fruit"] = fruitObject;
+
+    QJsonObject snakeObject;
+    snakeController->getSnake()->writeJSON(snakeObject);
+    json["snake"] = snakeObject;
+
+    sessionManager->saveToJSON(json);
+}
+
 void GameController::initializeHash()
 {
     checkboard.reserve(1300);
@@ -116,8 +160,18 @@ void GameController::initializeHash()
             checkboard.insert(QPoint{i,j},
                               true);
 
-    checkboard.insert(snakeController->getSnake()->getHead()->position(),
+    checkboard.insert(snakeController->getSnake()->getHead()->getPosition(),
                       false);
+}
+
+QPoint GameController::checkFruit() const
+{
+    int x,y;
+    do {
+        x = QRandomGenerator::global()->bounded(40);
+        y = QRandomGenerator::global()->bounded(30);
+    } while (checkboard.value(QPoint{x*10+5,y*10+5}) == false);
+    return QPoint{x*10+5,y*10+5};
 }
 
 void GameController::endGame()
@@ -149,60 +203,4 @@ int GameController::calculateSpeed() const
         s -= s/10;
 
     return s;
-}
-
-void GameController::readJSON()
-{
-    QJsonObject json;
-
-    sessionManager->loadFromJSON(json);
-
-    QJsonObject fruitObject = json["fruit"].toObject();
-    fruit->readJSON(fruitObject);
-
-    QJsonObject snakeObject = json["snake"].toObject();
-    snakeController->getSnake()->readJSON(snakeObject);
-
-    checkboard.clear();
-    checkboard.reserve(40*30);
-    for (int i = 5; i<400; i+=10)
-        for (int j = 5; j<300; j+=10)
-            checkboard.insert(QPoint{i,j},
-                              true);
-
-    for (auto c : snakeController->getSnake()->getChunks()) {
-        mainWindow->getScene()->addItem(c);
-        checkboard.insert(c->position(),
-                          false);
-    }
-
-    emit lengthChanged(QString::number(snakeController->
-                                       getSnake()->
-                                       getLength()));
-    emit speedChanged(QString::number(1000/calculateSpeed()));
-}
-
-void GameController::writeJSON()
-{
-    QJsonObject json;
-
-    QJsonObject fruitObject;
-    fruit->writeJSON(fruitObject);
-    json["fruit"] = fruitObject;
-
-    QJsonObject snakeObject;
-    snakeController->getSnake()->writeJSON(snakeObject);
-    json["snake"] = snakeObject;
-
-    sessionManager->saveToJSON(json);
-}
-
-SessionManager* GameController::getSessionManager() const
-{
-    return sessionManager;
-}
-
-Fruit* GameController::getFruit() const
-{
-    return fruit;
 }

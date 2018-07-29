@@ -1,11 +1,10 @@
 #ifndef GAMECONTROLLER_H
 #define GAMECONTROLLER_H
 
+#include "fruit.h"
+#include "mainwindow.h"
 #include "sessionmanager.h"
 #include "snakecontroller.h"
-#include "mainwindow.h"
-#include "snake.h"
-#include "fruit.h"
 
 #include <QObject>
 #include <QTimer>
@@ -19,8 +18,7 @@ public:
     ~GameController() override;
 
     SessionManager* getSessionManager() const;
-
-    Fruit* getFruit() const;
+    Fruit*          getFruit()          const;
 
 public slots:
     void eatFruit();
@@ -33,25 +31,23 @@ public slots:
 
 signals:
     void lengthChanged(QString);
-    void speedChanged(QString);
+    void speedChanged (QString);
 
 private:
     void initializeHash();
-    QPoint checkFruit();
+    QPoint checkFruit() const;
 
     void endGame();
     void winGame();
 
     int calculateSpeed() const;
 
-    SessionManager* sessionManager;
-    SnakeController* snakeController;
-    Fruit* fruit;
-    MainWindow* mainWindow;
-
-    QTimer* timer;
-
-    QHash<QPoint, bool> checkboard;
+    SessionManager*    sessionManager;
+    SnakeController*   snakeController;
+    Fruit*             fruit;
+    MainWindow*        mainWindow;
+    QTimer*            timer;
+    QHash<QPoint,bool> checkboard;
 };
 
 #endif // GAMECONTROLLER_H

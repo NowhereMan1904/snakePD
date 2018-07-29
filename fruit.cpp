@@ -25,7 +25,7 @@ void Fruit::paint(QPainter* painter,
     painter->drawEllipse(pos, 6, 6);
 }
 
-QPoint Fruit::position() const
+QPoint Fruit::getPosition() const
 {
     return pos;
 }

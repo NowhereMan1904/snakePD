@@ -1,9 +1,9 @@
 #ifndef SNAKE_H
 #define SNAKE_H
 
-#include <QObject>
-
 #include "chunksnake.h"
+
+#include <QObject>
 
 class Snake : public QObject
 {
@@ -12,37 +12,32 @@ class Snake : public QObject
 public:
     enum class Direction { Up, Down, Left, Right, Stop };
 
-    Snake(QPoint position);
+    Snake(QPoint);
     ~Snake() override = default;
 
-    void setDirection(Snake::Direction);
-    Direction direction();
+    void      setDirection(Direction);
+    Direction getDirection() const;
 
-    ChunkSnake* getHead();
-    ChunkSnake* getTail();
+    void   setCurrentColor(QColor);
+    QColor getCurrentColor() const;
 
-    void changeColor(QColor);
-
-    int getLength() const;
+    ChunkSnake*        getHead()   const;
+    ChunkSnake*        getTail()   const;
+    int                getLength() const;
     QList<ChunkSnake*> getChunks() const;   // do NOT use this function to
                                             // modify the chunk list
 
-    void hide();
-
-    void readJSON(const QJsonObject &json);
-    void writeJSON(QJsonObject &json) const;
-
-    QColor getCurrentColor() const;
-
+    void hide() const;
     void cycle();
+    void readJSON (const QJsonObject&);
+    void writeJSON(QJsonObject&) const;
 
 public slots:
     ChunkSnake* addChunk();
 
 private:
-    enum Direction dir;
-    QColor currentColor;
-
+    enum Direction     dir;
+    QColor             currentColor;
     QList<ChunkSnake*> chunks;
 };
 

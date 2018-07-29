@@ -3,7 +3,7 @@
 #include <QFile>
 #include <QJsonDocument>
 
-void SessionManager::loadFromJSON(QJsonObject& object)
+void SessionManager::loadFromJSON(QJsonObject& object) const
 {
     QFile loadFile("save.Json");
 
@@ -17,7 +17,7 @@ void SessionManager::loadFromJSON(QJsonObject& object)
     object = loadDoc.object();
 }
 
-void SessionManager::saveToJSON(QJsonObject& json)
+void SessionManager::saveToJSON(QJsonObject& json) const
 {
     QFile saveFile("save.Json");
 

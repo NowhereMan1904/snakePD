@@ -14,24 +14,29 @@ void Snake::setDirection(Snake::Direction direction)
     dir = direction;
 }
 
-Snake::Direction Snake::direction()
+Snake::Direction Snake::getDirection() const
 {
     return dir;
 }
 
-ChunkSnake* Snake::getHead()
+void Snake::setCurrentColor(QColor color)
+{
+    currentColor = color;
+}
+
+QColor Snake::getCurrentColor() const
+{
+    return currentColor;
+}
+
+ChunkSnake* Snake::getHead() const
 {
     return chunks.front();
 }
 
-ChunkSnake* Snake::getTail()
+ChunkSnake* Snake::getTail() const
 {
     return chunks.back();
-}
-
-void Snake::changeColor(QColor color)
-{
-    currentColor = color;
 }
 
 int Snake::getLength() const
@@ -44,10 +49,15 @@ QList<ChunkSnake*> Snake::getChunks() const
     return chunks;
 }
 
-void Snake::hide()
+void Snake::hide() const
 {
     for (auto c : chunks)
         c->hide();
+}
+
+void Snake::cycle()
+{
+    chunks.move(chunks.size()-1, 0);
 }
 
 void Snake::readJSON(const QJsonObject& json)
@@ -90,18 +100,8 @@ void Snake::writeJSON(QJsonObject& json) const
 
 ChunkSnake* Snake::addChunk()
 {
-    auto chunk = new ChunkSnake{chunks.back()->position()};
+    auto chunk = new ChunkSnake{chunks.back()->getPosition()};
     chunk->setColor(Qt::transparent);
     chunks << chunk;
     return chunk;
-}
-
-QColor Snake::getCurrentColor() const
-{
-    return currentColor;
-}
-
-void Snake::cycle()
-{
-    chunks.move(chunks.size()-1, 0);
 }

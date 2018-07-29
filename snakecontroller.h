@@ -1,9 +1,9 @@
 #ifndef SNAKECONTROLLER_H
 #define SNAKECONTROLLER_H
 
-#include "chunksnake.h"
 #include "snake.h"
-#include <QObject>
+
+#include <QKeyEvent>
 
 class SnakeController
 {
@@ -11,17 +11,16 @@ public:
     explicit SnakeController();
     ~SnakeController();
 
-    void changeDirection(QKeyEvent*);
-
     Snake* getSnake() const;
-
+    void changeDirection(QKeyEvent*);
     void moveChunk();
 
 private:
     bool canChangeDirection();
 
     Snake* snake;
-    bool enable;
+    bool   enable;
+
     constexpr static int shift = 10;
 };
 

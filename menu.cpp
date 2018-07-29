@@ -1,6 +1,9 @@
 #include "menu.h"
+
 #include "gamecontroller.h"
-#include "sessionmanager.h"
+
+#include <QPushButton>
+#include <QVBoxLayout>
 
 Menu::Menu(GameController* gameController)
 {

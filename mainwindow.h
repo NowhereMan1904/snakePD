@@ -4,10 +4,9 @@
 #include "menu.h"
 #include "snake.h"
 
-#include <QWidget>
 #include <QGraphicsView>
 #include <QStackedLayout>
-#include <QJsonObject>
+#include <QWidget>
 
 class GameController;
 
@@ -17,11 +16,12 @@ class MainWindow : public QWidget
 
 public:
     MainWindow(GameController*, Snake*);
-    ~MainWindow() override;
+    ~MainWindow() override = default;
 
-    void keyPressEvent(QKeyEvent *event) override;
+    void keyPressEvent(QKeyEvent*) override;
 
     QGraphicsScene* getScene() const;
+
     void closeMenu();
     void showMenu();
 
@@ -29,13 +29,10 @@ signals:
     void keyPressed(QKeyEvent*);
 
 private:
-    QGraphicsView* view;
+    QGraphicsView*  view;
     QGraphicsScene* scene;
-
-    Menu* menu;
-
+    Menu*           menu;
     QStackedLayout* stackedLayout;
-
 };
 
 #endif // MAINWINDOW_H
