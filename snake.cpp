@@ -93,8 +93,6 @@ ChunkSnake* Snake::addChunk()
     auto chunk = new ChunkSnake{chunks.back()->position()};
     chunk->setColor(Qt::transparent);
     chunks << chunk;
-
-    emit lengthChanged(QString::number(chunks.size()));
     return chunk;
 }
 

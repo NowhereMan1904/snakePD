@@ -31,6 +31,10 @@ public slots:
     void readJSON();
     void writeJSON();
 
+signals:
+    void lengthChanged(QString);
+    void speedChanged(QString);
+
 private:
     void initializeHash();
     QPoint checkFruit();
@@ -38,13 +42,14 @@ private:
     void endGame();
     void winGame();
 
+    int calculateSpeed() const;
+
     SessionManager* sessionManager;
     SnakeController* snakeController;
     Fruit* fruit;
     MainWindow* mainWindow;
 
     QTimer* timer;
-    int time;
 
     QHash<QPoint, bool> checkboard;
 };

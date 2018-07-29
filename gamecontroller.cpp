@@ -14,8 +14,7 @@ GameController::GameController(QObject *parent)
     : QObject(parent),
       sessionManager {new SessionManager},
       snakeController {new SnakeController},
-      timer {new QTimer},
-      time {100}
+      timer {new QTimer{this}}
 {
     initializeHash();
 
@@ -29,14 +28,13 @@ GameController::GameController(QObject *parent)
     mainWindow = new MainWindow(this, snakeController->getSnake());
     mainWindow->show();
 
-    timer->start(time);
+    timer->start(100);
 }
 
 GameController::~GameController()
 {
     delete sessionManager;
     delete snakeController;
-    delete timer;
 }
 
 void GameController::keyHandler(QKeyEvent* e)
@@ -73,12 +71,14 @@ void GameController::eatFruit()
         if (snake->getLength() == 40*30)
             winGame();
 
-        if (snake->getLength() % 5 == 0 && time>=5) {
-            time -= time/10;
-            timer->start(time);
+        if (snake->getLength() % 5 == 0) {
+            int s = calculateSpeed();
+            timer->start(s);
 
-//            emit speedChanged(QString::number(1000/time));
+            emit speedChanged(QString::number(1000/s));
         }
+
+        emit lengthChanged(QString::number(snake->getLength()));
     }
 }
 
@@ -100,7 +100,7 @@ void GameController::movement()
 void GameController::start()
 {
     mainWindow->closeMenu();
-    timer->start();
+    timer->start(calculateSpeed());
 }
 
 void GameController::exit()
@@ -140,6 +140,17 @@ void GameController::winGame()
     mainWindow->getScene()->addItem(text);
 }
 
+int GameController::calculateSpeed() const
+{
+    auto l = snakeController->getSnake()->getLength();
+    auto s = 100;
+
+    for (int i = l/5; i>0; --i)
+        s -= s/10;
+
+    return s;
+}
+
 void GameController::readJSON()
 {
     QJsonObject json;
@@ -151,8 +162,6 @@ void GameController::readJSON()
 
     QJsonObject snakeObject = json["snake"].toObject();
     snakeController->getSnake()->readJSON(snakeObject);
-
-    time = json["time"].toInt();
 
     checkboard.clear();
     checkboard.reserve(40*30);
@@ -166,6 +175,11 @@ void GameController::readJSON()
         checkboard.insert(c->position(),
                           false);
     }
+
+    emit lengthChanged(QString::number(snakeController->
+                                       getSnake()->
+                                       getLength()));
+    emit speedChanged(QString::number(1000/calculateSpeed()));
 }
 
 void GameController::writeJSON()
@@ -179,8 +193,6 @@ void GameController::writeJSON()
     QJsonObject snakeObject;
     snakeController->getSnake()->writeJSON(snakeObject);
     json["snake"] = snakeObject;
-
-    json["time"] = time;
 
     sessionManager->saveToJSON(json);
 }

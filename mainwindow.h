@@ -26,7 +26,6 @@ public:
     void showMenu();
 
 signals:
-    void speedChanged(QString);
     void keyPressed(QKeyEvent*);
 
 private:

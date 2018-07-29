@@ -39,9 +39,6 @@ public:
 public slots:
     ChunkSnake* addChunk();
 
-signals:
-    void lengthChanged(QString);
-
 private:
     enum Direction dir;
     QColor currentColor;

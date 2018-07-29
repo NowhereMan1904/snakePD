@@ -42,12 +42,12 @@ MainWindow::MainWindow(GameController* gameController,
     labelLayout->addWidget(lengthText);
     labelLayout->addWidget(lengthLabel);
     labelWidget->setLayout(labelLayout);
-//    auto speedLabel = new QLabel{QString::number(1000/time)};
-//    speedLabel->setStyleSheet("font-weight: bold");
+    auto speedLabel = new QLabel{QString::number(10)};
+    speedLabel->setStyleSheet("font-weight: bold");
     auto speedText = new QLabel{"SPEED:"};
     speedText->setStyleSheet("font-weight: bold");
     labelLayout->addWidget(speedText);
-//    labelLayout->addWidget(speedLabel);
+    labelLayout->addWidget(speedLabel);
 
     // Stacked Layout
     stackedLayout->addWidget(view);
@@ -55,7 +55,6 @@ MainWindow::MainWindow(GameController* gameController,
 
     auto layout = new QVBoxLayout;
     layout->setContentsMargins(0,0,0,0);
-    //layout->addWidget(view);
     layout->addLayout(stackedLayout);
     layout->addWidget(labelWidget);
 
@@ -66,10 +65,10 @@ MainWindow::MainWindow(GameController* gameController,
 
     scene->addItem(gameController->getFruit());
 
-//    connect(snake, &Snake::lengthChanged,
-//            lengthLabel, &QLabel::setText);
-//    connect(this, &MainWindow::speedChanged,
-//            speedLabel, &QLabel::setText);
+    connect(gameController, &GameController::lengthChanged,
+            lengthLabel, &QLabel::setText);
+    connect(gameController, &GameController::speedChanged,
+            speedLabel, &QLabel::setText);
     connect(this, &MainWindow::keyPressed,
             gameController, &GameController::keyHandler);
 }
