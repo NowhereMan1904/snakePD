@@ -3,17 +3,12 @@
 
 #include "chunksnake.h"
 
-#include <QObject>
-
-class Snake : public QObject
+class Snake
 {
-    Q_OBJECT
-
 public:
     enum class Direction { Up, Down, Left, Right, Stop };
 
     Snake(QPoint);
-    ~Snake() override = default;
 
     void      setDirection(Direction);
     Direction getDirection() const;
@@ -27,13 +22,11 @@ public:
     QList<ChunkSnake*> getChunks() const;   // do NOT use this function to
                                             // modify the chunk list
 
+    ChunkSnake* addChunk();
     void hide() const;
     void cycle();
     void readJSON (const QJsonObject&);
     void writeJSON(QJsonObject&) const;
-
-public slots:
-    ChunkSnake* addChunk();
 
 private:
     enum Direction     dir;
