@@ -12,7 +12,6 @@ MainWindow::MainWindow(GameController* gameController,
       menu {new Menu{gameController}},
       stackedLayout {new QStackedLayout}
 {
-    setFocusPolicy(Qt::StrongFocus);
     // Window
     setWindowTitle("SnakePorcoDio");
     setFocus();
@@ -28,6 +27,7 @@ MainWindow::MainWindow(GameController* gameController,
     view->setRenderHint(QPainter::Antialiasing);
     view->setFixedSize(400,300);
     view->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+    view->setFocusPolicy(Qt::NoFocus);
 
     // Status bar
     auto labelWidget = new QWidget;
@@ -58,8 +58,6 @@ MainWindow::MainWindow(GameController* gameController,
     setLayout(layout);
 
     scene->addItem(snake->getHead());
-
-
     scene->addItem(gameController->getFruit());
 
     connect(gameController, &GameController::lengthChanged,
@@ -83,9 +81,11 @@ QGraphicsScene* MainWindow::getScene() const
 void MainWindow::showMenu()
 {
     stackedLayout->setCurrentWidget(menu);
+    menu->setFocus();
 }
 
 void MainWindow::closeMenu()
 {
     stackedLayout->setCurrentWidget(view);
+    setFocus();
 }

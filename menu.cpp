@@ -20,6 +20,8 @@ Menu::Menu(GameController* gameController)
     layout->addWidget(exitButton);
     layout->addWidget(settingsButton);
 
+    setFocusProxy(startButton);
+
     connect(startButton, &QPushButton::clicked,
             gameController, &GameController::start);
     connect(saveButton, &QPushButton::clicked,
