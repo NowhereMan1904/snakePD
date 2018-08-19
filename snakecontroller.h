@@ -12,7 +12,7 @@ public:
     ~SnakeController();
 
     Snake* getSnake() const;
-    void changeDirection(QKeyEvent*);
+    void changeDirection(int);
     void moveChunk();
 
 private:

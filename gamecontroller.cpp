@@ -3,17 +3,22 @@
 #include <QApplication>
 #include <QRandomGenerator>
 
+#include <QtDebug>
+
 inline uint qHash(QPoint key, uint seed)
 {
     return qHash(qMakePair(key.x(), key.y()), seed);
 }
 
-GameController::GameController(QObject *parent)
-    : QObject(parent),
+GameController::GameController(QQuickItem* quickview)
+    : QObject(nullptr),
       sessionManager {new SessionManager},
       snakeController {new SnakeController},
       timer {new QTimer{this}}
 {
+    connect(quickview, SIGNAL(keyPressed(int)),
+            this, SLOT(keyHandler(int)));
+    /*
     initializeHash();
 
     fruit = new Fruit{checkFruit()};
@@ -27,7 +32,7 @@ GameController::GameController(QObject *parent)
     mainWindow->show();
 
     timer->start(100);
-}
+*/}
 
 GameController::~GameController()
 {
@@ -97,13 +102,14 @@ void GameController::exit()
     QApplication::quit();
 }
 
-void GameController::keyHandler(QKeyEvent* e)
+void GameController::keyHandler(int key)
 {
-    if (e->key() == Qt::Key_Space) {
+    qDebug() << "premuto il tasto" << static_cast<Qt::Key>(key);
+    if (key == Qt::Key_Space) {
         timer->stop();
         mainWindow->showMenu();
     } else
-        snakeController->changeDirection(e);
+        snakeController->changeDirection(key);
 }
 
 void GameController::readJSON()

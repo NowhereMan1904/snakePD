@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui \
+            qml quick
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -43,3 +44,8 @@ HEADERS += \
     gamecontroller.h \
     snakecontroller.h \
     sessionmanager.h
+
+DISTFILES +=
+
+RESOURCES += \
+    qml.qrc

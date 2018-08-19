@@ -16,10 +16,10 @@ Snake* SnakeController::getSnake() const
     return snake;
 }
 
-void SnakeController::changeDirection(QKeyEvent* e)
+void SnakeController::changeDirection(int key)
 {
     if (canChangeDirection()) {
-            switch (e->key()) {
+            switch (key) {
                 case Qt::Key_Left:
                     if (snake->getDirection() != Snake::Direction::Right)
                         snake->setDirection(Snake::Direction::Left);

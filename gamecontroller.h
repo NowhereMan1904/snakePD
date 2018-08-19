@@ -7,6 +7,7 @@
 #include "snakecontroller.h"
 
 #include <QObject>
+#include <QQuickItem>
 #include <QTimer>
 
 class GameController : public QObject
@@ -14,7 +15,7 @@ class GameController : public QObject
     Q_OBJECT
 
 public:
-    explicit GameController(QObject *parent = nullptr);
+    explicit GameController(QQuickItem*);
     ~GameController() override;
 
     SessionManager* getSessionManager() const;
@@ -25,7 +26,7 @@ public slots:
     void movement();
     void start();
     void exit();
-    void keyHandler(QKeyEvent*);
+    void keyHandler(int);
     void readJSON();
     void writeJSON();
 

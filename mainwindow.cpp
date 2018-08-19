@@ -64,8 +64,8 @@ MainWindow::MainWindow(GameController* gameController,
             lengthLabel, &QLabel::setText);
     connect(gameController, &GameController::speedChanged,
             speedLabel, &QLabel::setText);
-    connect(this, &MainWindow::keyPressed,
-            gameController, &GameController::keyHandler);
+//    connect(this, &MainWindow::keyPressed,
+//            gameController, &GameController::keyHandler);
 }
 
 void MainWindow::keyPressEvent(QKeyEvent* event)
