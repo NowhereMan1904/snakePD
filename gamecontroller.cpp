@@ -2,6 +2,7 @@
 
 #include <QApplication>
 #include <QRandomGenerator>
+#include <QtQuick/QQuickView>
 
 #include <QtDebug>
 
@@ -10,13 +11,17 @@ inline uint qHash(QPoint key, uint seed)
     return qHash(qMakePair(key.x(), key.y()), seed);
 }
 
-GameController::GameController(QQuickItem* quickview)
+GameController::GameController()
     : QObject(nullptr),
       sessionManager {new SessionManager},
       snakeController {new SnakeController},
       timer {new QTimer{this}}
 {
-    connect(quickview, SIGNAL(keyPressed(int)),
+    QQuickView* view = new QQuickView(QUrl("qrc:///mainwindow.qml"));
+    view->setResizeMode(QQuickView::SizeRootObjectToView);
+    view->show();
+
+    connect(view->rootObject(), SIGNAL(keyPressed(int)),
             this, SLOT(keyHandler(int)));
     /*
     initializeHash();
@@ -104,7 +109,7 @@ void GameController::exit()
 
 void GameController::keyHandler(int key)
 {
-    qDebug() << "premuto il tasto" << static_cast<Qt::Key>(key);
+    qDebug() << "Hai premuto il tasto" << static_cast<Qt::Key>(key);
     if (key == Qt::Key_Space) {
         timer->stop();
         mainWindow->showMenu();

@@ -15,7 +15,7 @@ class GameController : public QObject
     Q_OBJECT
 
 public:
-    explicit GameController(QQuickItem*);
+    explicit GameController();
     ~GameController() override;
 
     SessionManager* getSessionManager() const;
