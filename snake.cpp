@@ -9,6 +9,11 @@ Snake::Snake(QPoint position)
     chunks << new ChunkSnake{position};
 }
 
+Snake::~Snake()
+{
+    qDeleteAll(chunks);
+}
+
 void Snake::setDirection(Snake::Direction direction)
 {
     dir = direction;

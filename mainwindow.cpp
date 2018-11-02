@@ -2,14 +2,12 @@
 
 #include "gamecontroller.h"
 
-#include <QLabel>
-
-MainWindow::MainWindow(GameController* gameController,
-                       Snake* snake)
+MainWindow::MainWindow(GameController* gameController)
     : QWidget{nullptr},
       view {new QGraphicsView},
       scene {new QGraphicsScene},
       menu {new Menu{gameController}},
+      loose {new QLabel},
       stackedLayout {new QStackedLayout}
 {
     // Window
@@ -29,6 +27,10 @@ MainWindow::MainWindow(GameController* gameController,
     view->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     view->setFocusPolicy(Qt::NoFocus);
 
+    // Loose
+    loose->setText(QStringLiteral("HAI PERSO PORCODDIO"));
+    loose->setFocusPolicy(Qt::NoFocus);
+
     // Status bar
     auto labelWidget = new QWidget;
     auto labelLayout = new QHBoxLayout;
@@ -47,8 +49,9 @@ MainWindow::MainWindow(GameController* gameController,
     labelLayout->addWidget(speedLabel);
 
     // Stacked Layout
-    stackedLayout->addWidget(view);
     stackedLayout->addWidget(menu);
+    stackedLayout->addWidget(view);
+    stackedLayout->addWidget(loose);
 
     auto layout = new QVBoxLayout;
     layout->setContentsMargins(0,0,0,0);
@@ -56,9 +59,6 @@ MainWindow::MainWindow(GameController* gameController,
     layout->addWidget(labelWidget);
 
     setLayout(layout);
-
-    scene->addItem(snake->getHead());
-    scene->addItem(gameController->getFruit());
 
     connect(gameController, &GameController::lengthChanged,
             lengthLabel, &QLabel::setText);
@@ -84,7 +84,13 @@ void MainWindow::showMenu()
     menu->setFocus();
 }
 
-void MainWindow::closeMenu()
+void MainWindow::showLoose()
+{
+    stackedLayout->setCurrentWidget(loose);
+    setFocus();
+}
+
+void MainWindow::showView()
 {
     stackedLayout->setCurrentWidget(view);
     setFocus();

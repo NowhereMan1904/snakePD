@@ -9,6 +9,7 @@ public:
     enum class Direction { Up, Down, Left, Right, Stop };
 
     Snake(QPoint);
+    ~Snake();
 
     void      setDirection(Direction);
     Direction getDirection() const;

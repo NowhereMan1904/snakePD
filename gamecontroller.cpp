@@ -11,22 +11,17 @@ inline uint qHash(QPoint key, uint seed)
 GameController::GameController(QObject *parent)
     : QObject(parent),
       sessionManager {new SessionManager},
-      snakeController {new SnakeController},
+      mainWindow {new MainWindow(this)},
       timer {new QTimer{this}}
 {
-    initializeHash();
-
-    fruit = new Fruit{checkFruit()};
+    initGame();
 
     connect(timer, &QTimer::timeout,
             this,  &GameController::movement);
     connect(timer, &QTimer::timeout,
             this,  &GameController::eatFruit);
 
-    mainWindow = new MainWindow(this, snakeController->getSnake());
     mainWindow->show();
-
-    timer->start(100);
 }
 
 GameController::~GameController()
@@ -80,7 +75,7 @@ void GameController::movement()
     snakeController->moveChunk();
 
     if (checkboard.value(snake->getHead()->getPosition()) == false)
-        endGame();
+        mainWindow->showLoose();
     else
         checkboard.insert(snake->getHead()->getPosition(),
                           false);
@@ -88,8 +83,14 @@ void GameController::movement()
 
 void GameController::start()
 {
-    reset();
-    mainWindow->closeMenu();
+    auto items = mainWindow->getScene()->items();
+    for(auto i : items) {
+        if (i->type() == QGraphicsSimpleTextItem::Type) {
+            mainWindow->getScene()->removeItem(i);
+            delete i;
+        }
+    }
+    mainWindow->showView();
     timer->start(calculateSpeed());
 }
 
@@ -131,11 +132,6 @@ void GameController::readJSON()
         checkboard.insert(c->getPosition(),
                           false);
     }
-
-    emit lengthChanged(QString::number(snakeController->
-                                       getSnake()->
-                                       getLength()));
-    emit speedChanged(QString::number(1000/calculateSpeed()));
 }
 
 void GameController::writeJSON()
@@ -151,6 +147,21 @@ void GameController::writeJSON()
     json["snake"] = snakeObject;
 
     sessionManager->saveToJSON(json);
+}
+
+void GameController::continueGame()
+{
+//TODO macchina a stati e continue after loosing
+    mainWindow->showView();
+    timer->start(calculateSpeed());
+}
+
+void GameController::newGame()
+{
+    delete snakeController;
+    delete fruit;
+    initGame();
+    continueGame();
 }
 
 void GameController::initializeHash()
@@ -175,11 +186,25 @@ QPoint GameController::checkFruit() const
     return QPoint{x*10+5,y*10+5};
 }
 
+void GameController::initGame()
+{
+    snakeController = new SnakeController;
+    initializeHash();
+    fruit = new Fruit(checkFruit());
+    emit lengthChanged(QString::number(snakeController->
+                                       getSnake()->
+                                       getLength()));
+    emit speedChanged(QString::number(1000/calculateSpeed()));
+    mainWindow->getScene()->addItem(
+                snakeController->getSnake()->getHead());
+    mainWindow->getScene()->addItem(fruit);
+}
+
 void GameController::endGame()
 {
     timer->stop();
-    snakeController->getSnake()->hide();
-    fruit->hide();
+    delete snakeController;
+    delete fruit;
     auto text = new QGraphicsSimpleTextItem{"HAI PERSO PORCODDIO"};
     text->setPen(QPen{Qt::red});
     text->setPos(200 - text->boundingRect().center().x(),
@@ -204,26 +229,4 @@ int GameController::calculateSpeed() const
         s -= s/10;
 
     return s;
-}
-
-void GameController::reset()
-{
-    delete snakeController;
-    snakeController = new SnakeController();
-    emit lengthChanged(QString::number(1));
-    emit speedChanged(QString::number(10));
-
-    checkboard.clear();
-    initializeHash();
-
-    fruit = new Fruit(checkFruit());
-
-    auto items = mainWindow->getScene()->items();
-    for(auto i : items) {
-        mainWindow->getScene()->removeItem(i);
-        delete i;
-    }
-    mainWindow->getScene()->addItem(
-                snakeController->getSnake()->getHead());
-    mainWindow->getScene()->addItem(fruit);
 }

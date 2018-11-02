@@ -8,22 +8,26 @@
 Menu::Menu(GameController* gameController)
 {
     auto layout = new QVBoxLayout(this);
-    auto startButton = new QPushButton("Start");
+    auto continueButton = new QPushButton("Continue");
+    auto newGameButton = new QPushButton("New Game");
     auto saveButton = new QPushButton("Save");
     auto loadButton = new QPushButton("Load");
     auto exitButton = new QPushButton("Exit");
     auto settingsButton = new QPushButton("Settings");
 
-    layout->addWidget(startButton);
+    layout->addWidget(newGameButton);
+    layout->addWidget(continueButton);
     layout->addWidget(saveButton);
     layout->addWidget(loadButton);
     layout->addWidget(exitButton);
     layout->addWidget(settingsButton);
 
-    setFocusProxy(startButton);
+    setFocusProxy(newGameButton);
 
-    connect(startButton, &QPushButton::clicked,
-            gameController, &GameController::start);
+    connect(continueButton, &QPushButton::clicked,
+            gameController, &GameController::continueGame);
+    connect(newGameButton, &QPushButton::clicked,
+            gameController, &GameController::newGame);
     connect(saveButton, &QPushButton::clicked,
             gameController, &GameController::writeJSON);
     connect(loadButton, &QPushButton::clicked,

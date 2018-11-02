@@ -28,6 +28,8 @@ public slots:
     void keyHandler(QKeyEvent*);
     void readJSON();
     void writeJSON();
+    void continueGame();
+    void newGame();
 
 signals:
     void lengthChanged(QString);
@@ -37,6 +39,7 @@ private:
     void initializeHash();
     QPoint checkFruit() const;
 
+    void initGame();
     void endGame();
     void winGame();
 

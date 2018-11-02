@@ -14,6 +14,7 @@ public:
     Snake* getSnake() const;
     void changeDirection(QKeyEvent*);
     void moveChunk();
+    void reset();
 
 private:
     bool canChangeDirection();
