@@ -42,6 +42,8 @@ private:
 
     int calculateSpeed() const;
 
+    void reset();
+
     SessionManager*    sessionManager;
     SnakeController*   snakeController;
     Fruit*             fruit;

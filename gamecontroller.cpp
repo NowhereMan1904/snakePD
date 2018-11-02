@@ -88,6 +88,7 @@ void GameController::movement()
 
 void GameController::start()
 {
+    reset();
     mainWindow->closeMenu();
     timer->start(calculateSpeed());
 }
@@ -203,4 +204,26 @@ int GameController::calculateSpeed() const
         s -= s/10;
 
     return s;
+}
+
+void GameController::reset()
+{
+    delete snakeController;
+    snakeController = new SnakeController();
+    emit lengthChanged(QString::number(1));
+    emit speedChanged(QString::number(10));
+
+    checkboard.clear();
+    initializeHash();
+
+    fruit = new Fruit(checkFruit());
+
+    auto items = mainWindow->getScene()->items();
+    for(auto i : items) {
+        mainWindow->getScene()->removeItem(i);
+        delete i;
+    }
+    mainWindow->getScene()->addItem(
+                snakeController->getSnake()->getHead());
+    mainWindow->getScene()->addItem(fruit);
 }
