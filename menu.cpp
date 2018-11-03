@@ -9,8 +9,10 @@ Menu::Menu(GameController* gameController)
 {
     auto layout = new QVBoxLayout(this);
     auto continueButton = new QPushButton("Continue");
+    continueButton->setEnabled(false);
     auto newGameButton = new QPushButton("New Game");
     auto saveButton = new QPushButton("Save");
+    saveButton->setEnabled(false);
     auto loadButton = new QPushButton("Load");
     auto exitButton = new QPushButton("Exit");
     auto settingsButton = new QPushButton("Settings");
@@ -34,5 +36,10 @@ Menu::Menu(GameController* gameController)
             gameController, &GameController::readJSON);
     connect(exitButton, &QPushButton::clicked,
             gameController, &GameController::exit);
+
+    connect(gameController, &GameController::enableButtons,
+            saveButton, &QPushButton::setEnabled);
+    connect(gameController, &GameController::enableButtons,
+            continueButton, &QPushButton::setEnabled);
 
 }

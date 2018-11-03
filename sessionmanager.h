@@ -9,7 +9,7 @@ class SessionManager
 public:
     explicit SessionManager() = default;
 
-    void loadFromJSON(QJsonObject&) const;
+    bool loadFromJSON(QJsonObject&) const;
     void saveToJSON  (QJsonObject&) const;
 };
 

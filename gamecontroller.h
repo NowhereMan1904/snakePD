@@ -23,7 +23,6 @@ public:
 public slots:
     void eatFruit();
     void movement();
-    void start();
     void exit();
     void keyHandler(QKeyEvent*);
     void readJSON();
@@ -34,13 +33,13 @@ public slots:
 signals:
     void lengthChanged(QString);
     void speedChanged (QString);
+    void enableButtons(bool);
 
 private:
     void initializeHash();
     QPoint checkFruit() const;
 
     void initGame();
-    void endGame();
     void winGame();
 
     int calculateSpeed() const;
@@ -53,6 +52,7 @@ private:
     MainWindow*        mainWindow;
     QTimer*            timer;
     QHash<QPoint,bool> checkboard;
+    bool               isRunning;
 };
 
 #endif // GAMECONTROLLER_H

@@ -12,7 +12,8 @@ GameController::GameController(QObject *parent)
     : QObject(parent),
       sessionManager {new SessionManager},
       mainWindow {new MainWindow(this)},
-      timer {new QTimer{this}}
+      timer {new QTimer{this}},
+      isRunning {false}
 {
     initGame();
 
@@ -74,24 +75,15 @@ void GameController::movement()
 
     snakeController->moveChunk();
 
-    if (checkboard.value(snake->getHead()->getPosition()) == false)
+    if (checkboard.value(snake->getHead()->getPosition()) == false) {
+        isRunning = false;
         mainWindow->showLoose();
-    else
+        emit enableButtons(false);
+    }
+    else {
         checkboard.insert(snake->getHead()->getPosition(),
                           false);
-}
-
-void GameController::start()
-{
-    auto items = mainWindow->getScene()->items();
-    for(auto i : items) {
-        if (i->type() == QGraphicsSimpleTextItem::Type) {
-            mainWindow->getScene()->removeItem(i);
-            delete i;
-        }
     }
-    mainWindow->showView();
-    timer->start(calculateSpeed());
 }
 
 void GameController::exit()
@@ -112,54 +104,61 @@ void GameController::readJSON()
 {
     QJsonObject json;
 
-    sessionManager->loadFromJSON(json);
+    if (sessionManager->loadFromJSON(json)) {
+        QJsonObject fruitObject = json["fruit"].toObject();
+        fruit->readJSON(fruitObject);
 
-    QJsonObject fruitObject = json["fruit"].toObject();
-    fruit->readJSON(fruitObject);
+        QJsonObject snakeObject = json["snake"].toObject();
+        snakeController->getSnake()->readJSON(snakeObject);
 
-    QJsonObject snakeObject = json["snake"].toObject();
-    snakeController->getSnake()->readJSON(snakeObject);
+        checkboard.clear();
+        checkboard.reserve(40*30);
+        for (int i = 5; i<400; i+=10)
+            for (int j = 5; j<300; j+=10)
+                checkboard.insert(QPoint{i,j},
+                                  true);
 
-    checkboard.clear();
-    checkboard.reserve(40*30);
-    for (int i = 5; i<400; i+=10)
-        for (int j = 5; j<300; j+=10)
-            checkboard.insert(QPoint{i,j},
-                              true);
-
-    for (auto c : snakeController->getSnake()->getChunks()) {
-        mainWindow->getScene()->addItem(c);
-        checkboard.insert(c->getPosition(),
-                          false);
+        for (auto c : snakeController->getSnake()->getChunks()) {
+            mainWindow->getScene()->addItem(c);
+            checkboard.insert(c->getPosition(),
+                              false);
+        }
+        isRunning = true;
+        emit enableButtons(true);
     }
 }
 
 void GameController::writeJSON()
 {
-    QJsonObject json;
+    if (isRunning) {
+        QJsonObject json;
 
-    QJsonObject fruitObject;
-    fruit->writeJSON(fruitObject);
-    json["fruit"] = fruitObject;
+        QJsonObject fruitObject;
+        fruit->writeJSON(fruitObject);
+        json["fruit"] = fruitObject;
 
-    QJsonObject snakeObject;
-    snakeController->getSnake()->writeJSON(snakeObject);
-    json["snake"] = snakeObject;
+        QJsonObject snakeObject;
+        snakeController->getSnake()->writeJSON(snakeObject);
+        json["snake"] = snakeObject;
 
-    sessionManager->saveToJSON(json);
+        sessionManager->saveToJSON(json);
+    }
 }
 
 void GameController::continueGame()
 {
-//TODO macchina a stati e continue after loosing
-    mainWindow->showView();
-    timer->start(calculateSpeed());
+    if (isRunning) {
+        mainWindow->showView();
+        timer->start(calculateSpeed());
+    }
 }
 
 void GameController::newGame()
 {
     delete snakeController;
     delete fruit;
+    emit enableButtons(true);
+    isRunning = true;
     initGame();
     continueGame();
 }
@@ -198,18 +197,6 @@ void GameController::initGame()
     mainWindow->getScene()->addItem(
                 snakeController->getSnake()->getHead());
     mainWindow->getScene()->addItem(fruit);
-}
-
-void GameController::endGame()
-{
-    timer->stop();
-    delete snakeController;
-    delete fruit;
-    auto text = new QGraphicsSimpleTextItem{"HAI PERSO PORCODDIO"};
-    text->setPen(QPen{Qt::red});
-    text->setPos(200 - text->boundingRect().center().x(),
-                 150 - text->boundingRect().center().y());
-    mainWindow->getScene()->addItem(text);
 }
 
 void GameController::winGame()
