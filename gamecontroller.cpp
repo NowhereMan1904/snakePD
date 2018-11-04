@@ -1,7 +1,19 @@
 #include "gamecontroller.h"
 
+#include "chunksnake.h"
+#include "fruit.h"
+#include "mainwindow.h"
+#include "sessionmanager.h"
+#include "snake.h"
+#include "snakecontroller.h"
+
+
 #include <QApplication>
+#include <QGraphicsScene>
+#include <QJsonObject>
+#include <QKeyEvent>
 #include <QRandomGenerator>
+#include <QTimer>
 
 inline uint qHash(QPoint key, uint seed)
 {

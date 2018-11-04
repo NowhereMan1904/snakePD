@@ -1,6 +1,9 @@
 #include "snake.h"
 
+#include "chunksnake.h"
+
 #include <QJsonArray>
+#include <QJsonObject>
 
 Snake::Snake(QPoint position)
     : dir {Direction::Stop},

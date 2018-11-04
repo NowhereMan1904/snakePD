@@ -1,5 +1,10 @@
 #include "snakecontroller.h"
 
+#include "chunksnake.h"
+#include "snake.h"
+
+#include <QKeyEvent>
+
 SnakeController::SnakeController()
     : enable {true}
 {

@@ -2,7 +2,8 @@
 #define CHUNKSNAKE_H
 
 #include <QGraphicsItem>
-#include <QJsonObject>
+
+class QJsonObject;
 
 class ChunkSnake : public QGraphicsItem
 {

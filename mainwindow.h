@@ -1,15 +1,15 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "menu.h"
-#include "snake.h"
-
-#include <QGraphicsView>
-#include <QStackedLayout>
 #include <QWidget>
-#include <QLabel>
 
 class GameController;
+class Menu;
+
+class QGraphicsScene;
+class QGraphicsView;
+class QStackedLayout;
+class QLabel;
 
 class MainWindow : public QWidget
 {

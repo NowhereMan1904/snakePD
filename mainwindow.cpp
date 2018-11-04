@@ -1,6 +1,12 @@
 #include "mainwindow.h"
 
 #include "gamecontroller.h"
+#include "menu.h"
+
+#include <QGraphicsView>
+#include <QKeyEvent>
+#include <QLabel>
+#include <QStackedLayout>
 
 MainWindow::MainWindow(GameController* gameController)
     : QWidget{nullptr},

@@ -1,9 +1,9 @@
 #ifndef SNAKECONTROLLER_H
 #define SNAKECONTROLLER_H
 
-#include "snake.h"
+class Snake;
 
-#include <QKeyEvent>
+class QKeyEvent;
 
 class SnakeController
 {

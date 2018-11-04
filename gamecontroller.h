@@ -1,13 +1,16 @@
 #ifndef GAMECONTROLLER_H
 #define GAMECONTROLLER_H
 
-#include "fruit.h"
-#include "mainwindow.h"
-#include "sessionmanager.h"
-#include "snakecontroller.h"
-
+#include <QHash>
 #include <QObject>
-#include <QTimer>
+
+class Fruit;
+class MainWindow;
+class SessionManager;
+class SnakeController;
+
+class QKeyEvent;
+class QTimer;
 
 class GameController : public QObject
 {
@@ -43,8 +46,6 @@ private:
     void winGame();
 
     int calculateSpeed() const;
-
-    void reset();
 
     SessionManager*    sessionManager;
     SnakeController*   snakeController;

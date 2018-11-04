@@ -1,5 +1,3 @@
-// great rewriting soon :)
-
 #include "gamecontroller.h"
 
 #include <QApplication>

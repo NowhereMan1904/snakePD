@@ -1,7 +1,12 @@
 #ifndef SNAKE_H
 #define SNAKE_H
 
-#include "chunksnake.h"
+#include <QColor>
+
+class ChunkSnake;
+
+class QJsonObject;
+class QPoint;
 
 class Snake
 {

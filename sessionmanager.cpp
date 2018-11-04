@@ -2,6 +2,7 @@
 
 #include <QFile>
 #include <QJsonDocument>
+#include <QJsonObject>
 
 bool SessionManager::loadFromJSON(QJsonObject& object) const
 {

@@ -2,7 +2,8 @@
 #define FRUIT_H
 
 #include <QGraphicsItem>
-#include <QJsonObject>
+
+class QJsonObject;
 
 class Fruit : public QGraphicsItem
 {

@@ -1,10 +1,9 @@
 #ifndef SESSIONMANAGER_H
 #define SESSIONMANAGER_H
 
-#include <QJsonObject>
+class QJsonObject;
 
 class SessionManager
-
 {
 public:
     explicit SessionManager() = default;

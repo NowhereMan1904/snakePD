@@ -1,5 +1,6 @@
 #include "chunksnake.h"
 
+#include <QJsonObject>
 #include <QPainter>
 
 ChunkSnake::ChunkSnake(const QPoint& position)

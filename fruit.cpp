@@ -1,6 +1,7 @@
 #include "fruit.h"
 
 #include <QJsonArray>
+#include <QJsonObject>
 #include <QPainter>
 #include <QRandomGenerator>
 
